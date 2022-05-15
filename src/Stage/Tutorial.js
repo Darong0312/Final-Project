@@ -79,7 +79,7 @@ class Tutorial extends Phaser.Scene{
 
         this.physics.add.overlap(this.player1,this.fox,function(){
             if(keySpace.isDown && !this.over){
-                this.over = true;
+                this.over =true;
             }
             console.log(this.over);
         },null,this);
