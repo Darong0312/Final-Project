@@ -9,7 +9,7 @@ let config = {
             debug: true
         }
     },
-    scene: [ Tutorial ]
+    scene: [ Tutorial , Stage_2]
 }
 
 let game = new Phaser.Game(config);
@@ -19,6 +19,6 @@ let borderUISize = game.config.height / 15;
 let borderPadding = borderUISize / 3;
 
 // reserve keyboard variables
-let keyA,keyD,keyLEFT,keyRIGHT, timer,keyE;
+let keyA,keyD,keyW,keyLEFT,keyRIGHT,keyUP, timer,keyE;
 
 var owl;
