@@ -5,7 +5,10 @@ class Player2 extends Phaser.Physics.Arcade.Sprite{
         scene.physics.add.existing(this);
 
         this.ability = false;
-        this.wallClimb = false;
+        // setting jump variables
+        this.jump = false;
+        this.jumpCount = 0;
+
         this.interact = false;
     }
 
@@ -17,5 +20,24 @@ class Player2 extends Phaser.Physics.Arcade.Sprite{
         else if(keyRIGHT.isDown){
             this.setVelocityX(speed);
         }
+
+        if(keyUP.isDown){
+            if(!this.jump){
+                if(this.jumpCount > 0){
+                    this.setVelocityY(-250);
+                    this.jump = true;
+                    --this.jumpCount;
+                }
+            }
+        }
+
+        if(keyUP.isUp){
+            this.jump = false;
+        }
+
+        if(this.body.touching.down){
+            this.jumpCount = 1;
+        }
+
     }
 }
