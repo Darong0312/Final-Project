@@ -8,6 +8,7 @@ class Tutorial extends Phaser.Scene{
         this.load.image('plat','./assets/platform.png');
         this.load.image('platY','./assets/platformY.png');
         this.load.image('switch','./assets/switch.jpg');
+        this.load.image('rock','./assets/rock.png');
         this.load.spritesheet('run','./assets/Run.png',{
             frameWidth: 46,
             frameHeight: 57,
@@ -79,11 +80,11 @@ class Tutorial extends Phaser.Scene{
         this.fox.setImmovable(true);
         this.fox.body.allowGravity = false;
 
-        this.fox2 = this.physics.add.sprite(game.config.width/5,game.config.height - 100, 'fox').setScale(2);
-        this.fox2Plat = this.physics.add.collider(this.fox2,this.platform);
-        this.physics.add.collider(this.fox2,this.player2);
-        this.fox2.setImmovable(true);
-        this.fox2.body.allowGravity = false;
+        this.rock = this.physics.add.sprite(game.config.width/5,game.config.height - 100, 'rock').setScale(0.5);
+        this.rockPlat = this.physics.add.collider(this.rock,this.platform);
+        this.physics.add.collider(this.rock,this.player2);
+        this.rock.setImmovable(true);
+        this.rock.body.allowGravity = false;
 
         this.physics.add.overlap(this.player1,this.switch,function(){
             if(keySpace.isDown && !this.over){
@@ -105,11 +106,11 @@ class Tutorial extends Phaser.Scene{
         this.player1.update();
         this.player2.update();
         if(this.over){
-            this.fox2.visible = false;
-            this.fox2.setImmovable(false);
-            this.fox2.body.allowGravity = true;
-            this.fox2.setVelocityY(-500);
-            this.physics.world.removeCollider(this.fox2Plat);
+            this.rock.visible = false;
+            this.rock.setImmovable(false);
+            this.rock.body.allowGravity = true;
+            this.rock.setVelocityY(-500);
+            this.physics.world.removeCollider(this.rockPlat);
         }
     //    console.log(this.fox.body.onOverlap);
     }
