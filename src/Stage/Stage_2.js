@@ -65,7 +65,7 @@ class Stage_2 extends Phaser.Scene{
         },null,this);
         
 
-        
+        this.intro = this.add.text(borderUISize + borderPadding + 25, borderUISize + borderPadding*2,"Player 1 is the top one, Controled by WAD");
     }
 
     update(){

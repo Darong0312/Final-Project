@@ -51,7 +51,7 @@ class Tutorial extends Phaser.Scene{
         */
 
         // init players
-        this.player1 = new Player1(this,game.config.width/3, game.config.height/2 -100, 'run');
+        this.player1 = new Player1(this,game.config.width/3 - 200, game.config.height/2 -100, 'run');
         this.physics.add.collider(this.platform,this.player1);
         this.player1.setCollideWorldBounds(true);
         this.player2 = new Player2(this,game.config.width/2, game.config.height - 100, 'run');
@@ -71,10 +71,10 @@ class Tutorial extends Phaser.Scene{
         this.over = false;
 
         // init interact
-        this.switch = this.physics.add.sprite(game.config.width/3 + 60,game.config.height/2 -100, 'switch').setScale(0.1);
+        this.switch = this.physics.add.sprite(game.config.width/3 + 200,game.config.height/2 -100, 'switch').setScale(0.1);
         this.physics.add.collider(this.switch,this.platform);
 
-        this.fox = this.physics.add.sprite(game.config.width/3 - 100,game.config.height/2 -100, 'fox');
+        this.fox = this.physics.add.sprite(game.config.width/3 - 100,game.config.height/2 -100, 'rock').setScale(0.2);
         this.physics.add.collider(this.fox,this.platform);
         this.physics.add.collider(this.fox,this.player1);
         this.fox.setImmovable(true);
