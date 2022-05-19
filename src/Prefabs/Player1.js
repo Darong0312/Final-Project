@@ -15,18 +15,21 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
         this.climbTime = time;
         this.climb = true;
         
-        /*
-        this.clock = this.time.addEvent({
-            delay:1000,
-            callback: decreaseTime,
+        this.timeup = false;
+        this.timedEvent = scene.time.addEvent({ 
+            delay: 1000,
+            callback: () => {
+                this.timup = true;
+                this.climbTime--;
+                console.log(this.climbTime);
+                //console.log(this.timeup);
+            },
+            loop: true,
             callbackScope: this,
-            loop: true
-        })
+            paused: true,
+        });
+        this.climbTimer = scene.time.addEvent(this.timedEvent);
 
-        function decreaseTime(){
-            this.climbTime -= 1000;
-        }
-        */
     }
 
     update(){
@@ -40,7 +43,7 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
         }
 
         if(keyW.isDown && this.body.blocked.right){
-            if(this.climbTime >=0 ){
+            if(this.climbTime > 0  ){
                 this.allowGravity = false;
                 this.setVelocityY(-100);
             }
@@ -50,7 +53,7 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
         }
 
         if(keyW.isDown && this.body.blocked.left){
-            if(this.climbTime >=0 ){
+            if(this.climbTime > 0 ){
                 this.allowGravity = false;
                 this.setVelocityY(-100);
             }
@@ -59,24 +62,24 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
             this.body.allowGravity = true;
         }
 
-
         if(this.body.touching.down){
-            this.climb = true;
+            this.climbTimer.paused = true;
             this.climbTime = time;
-            console.log(this.climbTime);
         }
         else{
-            this.countDown = setInterval( ()=>{
-                //this.climbTime --;
-                //console.log(this.climbTime);
-                if(this.climbTime <=0 || this.climbTime < 1){
-                    this.climb = false;
-                    console.log(this.climbTime);
-                    clearInterval(this.countDown);
-                }
-            },1000)
+            this.climbTimer.paused = false;
         }
 
-    }
+        // if(keyW.isDown){
+        //     console.log("pressed")
+        //     this.climbTimer.paused = false;
+        //     this.climbTimer.reset(this.timedEvent);
+        // }
+        // else{
+        //     this.climbTimer.paused = false;
+        //     this.climbTimer.reset(this.timedEvent);
+        // }
 
+    }
+    
 }

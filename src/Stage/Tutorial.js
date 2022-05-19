@@ -78,6 +78,7 @@ class Tutorial extends Phaser.Scene{
         this.physics.add.collider(this.hatch, this.player1);
         this.physics.add.collider(this.platform2, this.player1);
         this.player1.setCollideWorldBounds(true);
+
         this.player2 = new Player2(this,game.config.width/3 - 200, game.config.height/2 -100, 'crab');
         this.physics.add.collider(this.platform,this.player2);
         this.physics.add.collider(this.ground, this.player2);
