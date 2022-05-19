@@ -30,6 +30,8 @@ class Tutorial extends Phaser.Scene{
     create(){
         // world bounds
         //this.physics.world.setBounds(0,0,800,600,true,true,true,false);
+        //set background
+        let bg = this.add.image(game.config.width/2, game.config.height/2,"back");
 
         // init ground and platform
         this.platform = this.physics.add.sprite(game.config.width/2,game.config.height/2 -50,'plat');
