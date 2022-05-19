@@ -1,6 +1,6 @@
 let config = {
     type: Phaser.CANVAS,
-    width: 800,
+    width: 1200,
     height: 600,
     physics: {
         default: 'arcade',
@@ -9,7 +9,7 @@ let config = {
             debug: true
         }
     },
-    scene: [ Tutorial ]
+    scene: [ Menu , Tutorial ]
 }
 
 let game = new Phaser.Game(config);
@@ -20,5 +20,7 @@ let borderPadding = borderUISize / 3;
 
 // reserve keyboard variables
 let keyA,keyD,keyW,keyLEFT,keyRIGHT,keyUP, timer,keyE;
+
+var keySpace;
 
 var owl;

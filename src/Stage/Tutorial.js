@@ -5,6 +5,7 @@ class Tutorial extends Phaser.Scene{
     }
 
     preload(){
+        this.load.image('back','./assets/tutorial_bg.png');
         this.load.image('plat','./assets/platform.png');
         this.load.image('platY','./assets/platformY.png');
         this.load.image('switch','./assets/switch.jpg');
