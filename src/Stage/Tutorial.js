@@ -5,6 +5,7 @@ class Tutorial extends Phaser.Scene{
     }
 
     preload(){
+        this.load.image('back','./assets/tutorial_bg.png');
         this.load.image('plat','./assets/platform.png');
         this.load.image('platY','./assets/platformY.png');
         this.load.image('switch','./assets/switch.jpg');
@@ -29,6 +30,8 @@ class Tutorial extends Phaser.Scene{
     create(){
         // world bounds
         //this.physics.world.setBounds(0,0,800,600,true,true,true,false);
+        //set background
+        let bg = this.add.image(game.config.width/2, game.config.height/2,"back");
 
         // init ground and platform
         this.tutorial_bg = this.add.tileSprite(0, 0, 1200, 650, 'tutorial_bg').setOrigin(0, 0);
