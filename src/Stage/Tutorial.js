@@ -64,19 +64,13 @@ class Tutorial extends Phaser.Scene{
         this.platform2.setImmovable(true);
         this.platform2.setFriction(0);
         
-        /*
-        this.platformY = this.physics.add.sprite(0,game.config.height/3,'platY').setScale(0.1);
-        this.platformY.displayWidth = 900;
-        this.platformY.body.allowGravity = false;
-        this.platformY.setImmovable(true);
-        this.platformY.setFrictionX(0);
-        */
         // init players
         this.player1 = new Player1(this,game.config.width/3 - 200, game.config.height - 100, 'monsterA');
         this.physics.add.collider(this.ground,this.player1);
         this.physics.add.collider(this.wall, this.player1);
         this.physics.add.collider(this.hatch, this.player1);
         this.physics.add.collider(this.platform2, this.player1);
+        this.physics.add.collider(this.platform,this.player1);
         this.player1.setCollideWorldBounds(true);
 
         this.player2 = new Player2(this,game.config.width/3 - 200, game.config.height/2 -100, 'crab');
@@ -94,20 +88,23 @@ class Tutorial extends Phaser.Scene{
         keyLEFT = this.input.keyboard.addKey(37);
         keyRIGHT = this.input.keyboard.addKey(39);
         keyUP = this.input.keyboard.addKey(38);
+        keyDOWN = this.input.keyboard.addKey(40);
         keyE = this.input.keyboard.addKey(69);
-        let keySpace = this.input.keyboard.addKey(32);
+    //    keySpace = this.input.keyboard.addKey(32);
 
-        this.over = false;
+        this.interact_button1 = false;
+        this.interact_button2 = false;
+        this.interact_switch = false;
 
         // init interact
         this.switch = this.physics.add.sprite(game.config.width/3 + 200,game.config.height/2 -100, 'switch').setScale(0.1);
         this.physics.add.collider(this.switch,this.platform);
 
-        this.fox = this.physics.add.sprite(game.config.width/3 - 100,game.config.height/2 - 40, 'box_fragile').setScale(1);
-        this.physics.add.collider(this.fox,this.platform);
-        this.physics.add.collider(this.fox,this.player2);
-        this.fox.setImmovable(true);
-        this.fox.body.allowGravity = false;
+        this.box = this.physics.add.sprite(game.config.width/3 - 100,game.config.height/2 - 40, 'box_fragile').setScale(1);
+        this.physics.add.collider(this.box,this.platform);
+        this.physics.add.collider(this.box,this.player2);
+        this.box.setImmovable(true);
+        this.box.body.allowGravity = false;
 
         this.rock = this.physics.add.sprite(game.config.width - 250,game.config.height - 60, 'box_fragile').setScale(1);
         this.rockPlat = this.physics.add.collider(this.rock,this.platform);
@@ -116,12 +113,27 @@ class Tutorial extends Phaser.Scene{
         this.rock.setImmovable(true);
         this.rock.body.allowGravity = false;
 
+        this.button = this.physics.add.sprite(game.config.width, game.config.height/2 - 600, "box_fragile").setScale(1);
+        this.physics.add.collider(this.button,this.platform2);
+        this.player1_button = this.physics.add.overlap(this.player1,this.button,function(){
+            if(keyE.isDown){
+                this.interact_button1 = true;
+                console.log(this.interact_button1);
+            }
+        },null,this);
+        this.player2_button = this.physics.add.overlap(this.player2,this.button,function(){
+            if(keyDOWN.isDown){
+                this.interact_button2 = true;
+                console.log(this.interact_button2);
+            }
+        },null,this);
+
         this.physics.add.overlap(this.player2,this.switch,function(){
-            if(keySpace.isDown && !this.over){
-                this.over =true;
+            if(keyDOWN.isDown && !this.interact_switch){
+                this.interact_switch = true;
                 this.sound.play('switch');
             }
-            console.log(this.over);
+            //console.log(this.interact_switch)
         },null,this);
         
         this.intro = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2 - 50,"Player 1 is the top one, Controlled by Left Right Up arrow");
@@ -135,13 +147,17 @@ class Tutorial extends Phaser.Scene{
     update(){
         this.player1.update();
         this.player2.update();
-        if(this.over){
+        if(this.interact_switch){
+            
             this.hatch.visible = false;
             this.hatch.setImmovable(false);
             this.hatch.body.allowGravity = true;
             this.hatch.setVelocityY(500);
-            //this.physics.world.removeCollider(this.hatchPlat);
+            this.physics.world.removeCollider(this.hatch);
         }
-    //    console.log(this.fox.body.onOverlap);
+
+        if(this.interact_button1 && this.interact_button2){
+            this.scene.start("menuScene");
+        }
     }
 }
