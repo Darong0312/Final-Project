@@ -16,6 +16,7 @@ class Tutorial extends Phaser.Scene{
         this.load.image('platform', './assets/wood_platform.png');
         this.load.image('crab', './assets/Crab.png');
         this.load.image('platformY', './assets/wood_platformY.png');
+        this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
 
         this.load.spritesheet('fox','./assets/foxani.png', {
             frameWidth: 48,
@@ -32,6 +33,36 @@ class Tutorial extends Phaser.Scene{
         //this.physics.world.setBounds(0,0,800,600,true,true,true,false);
         //set background
         let bg = this.add.image(game.config.width/2, game.config.height/2,"back");
+
+
+        // player 1 Idle right
+        this.anims.create({
+            key: 'tenti_idle_right',
+            frames: this.anims.generateFrameNames('tenti_atlas', {
+                prefix: 'tenti_idle_right_',
+                start: 1,
+                end: 4,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 7,
+            repeat: -1,
+            yoyo: true
+        });
+        // player 1 Idle left
+        this.anims.create({
+            key: 'tenti_idle_left',
+            frames: this.anims.generateFrameNames('tenti_atlas', {
+                prefix: 'tenti_idle_left_',
+                start: 1,
+                end: 4,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 7,
+            repeat: -1,
+            yoyo: true
+        });
 
         // init ground and platform
         this.tutorial_bg = this.add.tileSprite(0, 0, 1200, 650, 'tutorial_bg').setOrigin(0, 0);
@@ -141,12 +172,19 @@ class Tutorial extends Phaser.Scene{
         this.intro3 = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2 + 10,"Player 2 is the bottom one, Controlled by WAD");
         this.intro4 = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2 + 30,"can wall climb by A/D + W to wall climb when blocked by object");
         this.intro5 = this.add.text(borderUISize + borderPadding, 320,"Player 1 can interact with the switch");
-        this.intro9 = this.add.text(borderUISize + borderPadding, 350,"by press space bar when it is overlap with the switch");
+        this.intro9 = this.add.text(borderUISize + borderPadding, 350,"by pressing Down arrow when it is overlap with the switch");
     }
 
     update(){
         this.player1.update();
         this.player2.update();
+
+        if (keyD.isDown || !this.player1.anims.isPlaying) {
+            this.player1.anims.play('tenti_idle_right', true);
+        } else if (keyA.isDown) {
+            this.player1.anims.play('tenti_idle_left', true);
+        }
+
         if(this.interact_switch){
             
             this.hatch.visible = false;
