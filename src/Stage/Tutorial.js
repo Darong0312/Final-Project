@@ -17,6 +17,7 @@ class Tutorial extends Phaser.Scene{
         this.load.image('crab', './assets/Crab.png');
         this.load.image('platformY', './assets/wood_platformY.png');
         this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
+        this.load.image('box', './assets/box.png');
 
         this.load.spritesheet('fox','./assets/foxani.png', {
             frameWidth: 48,
@@ -128,21 +129,34 @@ class Tutorial extends Phaser.Scene{
         this.interact_switch = false;
 
         // init interact
-        this.switch = this.physics.add.sprite(game.config.width/3 + 200,game.config.height/2 -100, 'switch').setScale(0.1);
+        this.switch = this.physics.add.sprite(game.config.width/3 + 200,game.config.height/2 -100, 'switch').setScale(1);
+        this.switch.alpha = 0;
         this.physics.add.collider(this.switch,this.platform);
 
-        this.box = this.physics.add.sprite(game.config.width/3 - 100,game.config.height/2 - 40, 'box_fragile').setScale(1);
+        this.box = this.physics.add.sprite(game.config.width/3 + 20,game.config.height/2 - 40, 'box_fragile').setScale(1);
         this.physics.add.collider(this.box,this.platform);
         this.physics.add.collider(this.box,this.player2);
         this.box.setImmovable(true);
         this.box.body.allowGravity = false;
 
-        this.rock = this.physics.add.sprite(game.config.width - 250,game.config.height - 60, 'box_fragile').setScale(1);
+        this.rock = this.physics.add.sprite(game.config.width - 250, game.config.height - 60, 'box_fragile').setScale(1);
         this.rockPlat = this.physics.add.collider(this.rock,this.platform);
         this.physics.add.collider(this.rock,this.player1);
         this.physics.add.collider(this.rock, this.player2);
         this.rock.setImmovable(true);
         this.rock.body.allowGravity = false;
+
+        this.boxStack1 = this.physics.add.sprite(game.config.width - 260, game.config.height - 150, 'box').setScale(1.2);
+        this.physics.add.collider(this.boxStack1,this.player1);
+        this.physics.add.collider(this.boxStack1, this.player2);
+        this.boxStack1.setImmovable(true);
+        this.boxStack1.body.allowGravity = false;
+        this.boxStack2 = this.physics.add.sprite(game.config.width - 330, game.config.height - 60, 'box').setScale(1);
+        this.physics.add.collider(this.boxStack2,this.player1);
+        this.physics.add.collider(this.boxStack2, this.player2);
+        this.boxStack2.setImmovable(true);
+        this.boxStack2.body.allowGravity = false;
+
 
         this.button = this.physics.add.sprite(game.config.width, game.config.height/2 - 600, "box_fragile").setScale(1);
         this.physics.add.collider(this.button,this.platform2);
@@ -167,12 +181,12 @@ class Tutorial extends Phaser.Scene{
             //console.log(this.interact_switch)
         },null,this);
         
-        this.intro = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2 - 50,"Player 1 is the top one, Controlled by Left Right Up arrow");
-        this.intro2 = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2 - 20,"Able to double jump");
-        this.intro3 = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2 + 10,"Player 2 is the bottom one, Controlled by WAD");
-        this.intro4 = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2 + 30,"can wall climb by A/D + W to wall climb when blocked by object");
-        this.intro5 = this.add.text(borderUISize + borderPadding, 320,"Player 1 can interact with the switch");
-        this.intro9 = this.add.text(borderUISize + borderPadding, 350,"by pressing Down arrow when it is overlap with the switch");
+        //this.intro = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2 - 50,"Player 1 is the top one, Controlled by Left Right Up arrow");
+        //this.intro2 = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2 - 20,"Able to double jump");
+        //this.intro3 = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2 + 10,"Player 2 is the bottom one, Controlled by WAD");
+        //this.intro4 = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2 + 30,"can wall climb by A/D + W to wall climb when blocked by object");
+        //this.intro5 = this.add.text(borderUISize + borderPadding, 320,"Player 1 can interact with the switch");
+        //this.intro9 = this.add.text(borderUISize + borderPadding, 350,"by pressing Down arrow when it is overlap with the switch");
     }
 
     update(){
