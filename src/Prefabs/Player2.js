@@ -68,6 +68,10 @@ class Player2 extends Phaser.Physics.Arcade.Sprite{
         if(this.body.touching.down){
             this.jumpCount = 1;
         }
-
+/*
+        if(keyShift.isDown){
+            this.body.setSize(this.width,this.)
+        }
+*/
     }
 }
