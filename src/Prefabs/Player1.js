@@ -69,17 +69,7 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
         else{
             this.climbTimer.paused = false;
         }
-
-        // if(keyW.isDown){
-        //     console.log("pressed")
-        //     this.climbTimer.paused = false;
-        //     this.climbTimer.reset(this.timedEvent);
-        // }
-        // else{
-        //     this.climbTimer.paused = false;
-        //     this.climbTimer.reset(this.timedEvent);
-        // }
-
+        
     }
     
 }

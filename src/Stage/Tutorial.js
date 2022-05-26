@@ -204,12 +204,12 @@ class Tutorial extends Phaser.Scene{
             this.hatch.visible = false;
             this.hatch.setImmovable(false);
             this.hatch.body.allowGravity = true;
-            this.hatch.setVelocityY(500);
+            this.hatch.setVelocityY(-500);
             this.physics.world.removeCollider(this.hatch);
         }
 
         if(this.interact_button1 && this.interact_button2){
-            this.scene.start("menuScene");
+            this.scene.start("stageTwo");
         }
     }
 }
