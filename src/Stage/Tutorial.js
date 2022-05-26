@@ -16,8 +16,9 @@ class Tutorial extends Phaser.Scene{
         this.load.image('platform', './assets/wood_platform.png');
         this.load.image('crab', './assets/Crab.png');
         this.load.image('platformY', './assets/wood_platformY.png');
-        this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
         this.load.image('box', './assets/box.png');
+        this.load.atlas('crab_atlas', './assets/crabbertsheet.png', './assets/crabmap.json');
+        this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
 
         this.load.spritesheet('fox','./assets/foxani.png', {
             frameWidth: 48,
@@ -34,36 +35,6 @@ class Tutorial extends Phaser.Scene{
         //this.physics.world.setBounds(0,0,800,600,true,true,true,false);
         //set background
         let bg = this.add.image(game.config.width/2, game.config.height/2,"back");
-
-
-        // player 1 Idle right
-        this.anims.create({
-            key: 'tenti_idle_right',
-            frames: this.anims.generateFrameNames('tenti_atlas', {
-                prefix: 'tenti_idle_right_',
-                start: 1,
-                end: 4,
-                suffix: '',
-                zeroPad: 4
-            }),
-            frameRate: 7,
-            repeat: -1,
-            yoyo: true
-        });
-        // player 1 Idle left
-        this.anims.create({
-            key: 'tenti_idle_left',
-            frames: this.anims.generateFrameNames('tenti_atlas', {
-                prefix: 'tenti_idle_left_',
-                start: 1,
-                end: 4,
-                suffix: '',
-                zeroPad: 4
-            }),
-            frameRate: 7,
-            repeat: -1,
-            yoyo: true
-        });
 
         // init ground and platform
         this.tutorial_bg = this.add.tileSprite(0, 0, 1200, 650, 'tutorial_bg').setOrigin(0, 0);
@@ -192,12 +163,6 @@ class Tutorial extends Phaser.Scene{
     update(){
         this.player1.update();
         this.player2.update();
-
-        if (keyD.isDown || !this.player1.anims.isPlaying) {
-            this.player1.anims.play('tenti_idle_right', true);
-        } else if (keyA.isDown) {
-            this.player1.anims.play('tenti_idle_left', true);
-        }
 
         if(this.interact_switch){
             

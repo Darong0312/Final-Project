@@ -30,16 +30,50 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
         });
         this.climbTimer = scene.time.addEvent(this.timedEvent);
 
+        // player 1 Idle right
+        this.anims.create({
+            key: 'tenti_idle_right',
+            frames: this.anims.generateFrameNames('tenti_atlas', {
+                prefix: 'tenti_idle_right_',
+                start: 1,
+                end: 4,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 7,
+            repeat: -1,
+            yoyo: true
+        });
+        // player 1 Idle left
+        this.anims.create({
+            key: 'tenti_idle_left',
+            frames: this.anims.generateFrameNames('tenti_atlas', {
+                prefix: 'tenti_idle_left_',
+                start: 1,
+                end: 4,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 7,
+            repeat: -1,
+            yoyo: true
+        });
     }
 
     update(){
         this.setVelocityX(0);
 
+        if(!this.anims.isPlaying) {
+            this.anims.play('tenti_idle_right', true);
+        }
+
         if(keyA.isDown){
             this.setVelocityX(-speed);
+            this.anims.play('tenti_idle_left', true);
         }
         else if(keyD.isDown){
             this.setVelocityX(speed);
+            this.anims.play('tenti_idle_right', true);
         }
 
         if(keyW.isDown && this.body.blocked.right){
