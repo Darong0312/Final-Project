@@ -4,7 +4,7 @@ class Stage_1 extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('back','./assets/backgrounds1.png');
+        this.load.image('stage1','./assets/backgrounds1.png');
         this.load.image('man','./assets/olman.png');
         this.load.image('plat','./assets/platform.png');
         this.load.image('platY','./assets/platformY.png');
@@ -21,10 +21,8 @@ class Stage_1 extends Phaser.Scene{
     }
 
     create(){
-        // world bounds
-        //this.physics.world.setBounds(0,0,800,600,true,true,true,false);
         //set background
-        let bg = this.add.image(game.config.width/2, game.config.height/2,"back");
+        let bg = this.add.image(game.config.width/2, game.config.height/2,"stage1");
 
 
         // player 1 Idle right
@@ -57,7 +55,7 @@ class Stage_1 extends Phaser.Scene{
         });
 
         // init ground and platform
-        this.tutorial_bg = this.add.tileSprite(0, 0, 1200, 650, 'tutorial_bg').setOrigin(0, 0);
+        this.tutorial_bg = this.add.tileSprite(0, 0, 1200, 650, 'stage1').setOrigin(0, 0);
         this.platform = this.physics.add.sprite(game.config.width/3,game.config.height/2 + 10,'platform');
         this.platform.displayWidth = 900;
         this.platform.body.allowGravity = false;
@@ -201,6 +199,7 @@ class Stage_1 extends Phaser.Scene{
 
         if(this.interact_button1 && this.interact_button2){
             this.scene.start("stageTwo");
+            console.log("enter stage 2");
         }
     }
 }

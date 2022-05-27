@@ -122,15 +122,20 @@ class Tutorial extends Phaser.Scene{
         this.physics.add.collider(this.boxStack1, this.player2);
         this.boxStack1.setImmovable(true);
         this.boxStack1.body.allowGravity = false;
+
         this.boxStack2 = this.physics.add.sprite(game.config.width - 330, game.config.height - 60, 'box').setScale(1);
         this.physics.add.collider(this.boxStack2,this.player1);
         this.physics.add.collider(this.boxStack2, this.player2);
         this.boxStack2.setImmovable(true);
         this.boxStack2.body.allowGravity = false;
 
+        //this.playerGroup = this.game.add.group();
+        //this.playerGroup.add(playert1);
+        //this.playerGroup.add(playert2);
+
 
         this.button = this.physics.add.sprite(game.config.width, game.config.height/2 - 600, "box_fragile").setScale(1);
-        this.physics.add.collider(this.button,this.platform2);
+        this.physics.add.collider(this.button,this.platform2); //tutorial end box
         this.player1_button = this.physics.add.overlap(this.player1,this.button,function(){
             if(keyE.isDown){
                 this.interact_button1 = true;
@@ -174,7 +179,10 @@ class Tutorial extends Phaser.Scene{
         }
 
         if(this.interact_button1 && this.interact_button2){
-            this.scene.start("stageTwo");
+            this.scene.start("stageOne");
+            console.log("go to stage 1");
         }
+
     }
+
 }
