@@ -19,6 +19,7 @@ class Stage_2 extends Phaser.Scene{
         this.load.image('platformY', './assets/wood_platformY.png');
         this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
         this.load.image('box', './assets/box.png');
+        this.load.image('human','./assets/human.png');
 
         this.load.audio('switch','./assets/audio/switch.wav');
     }
@@ -49,20 +50,98 @@ class Stage_2 extends Phaser.Scene{
             this.physics.add.collider(this.ground, this.player2);
             this.player2.setCollideWorldBounds(true);
     
-            this.box = this.physics.add.sprite(game.config.width /3 - 100, game.config.height - 60, 'box').setScale(1);
+            this.box = this.physics.add.sprite(game.config.width /3 - 100, game.config.height - 60, 'box').setScale(0.5);
             this.physics.add.collider(this.box,this.ground);
             this.physics.add.collider(this.box,this.player2);
             this.physics.add.collider(this.box,this.player1);
             this.box.setImmovable(true);
             this.box.body.allowGravity = false;
 
-            this.door = this.physics.add.sprite(game.config.width / 3, game.config.height - 150,"platformY");
-            this.door.displayHeight = 200;
+            this.door = this.physics.add.sprite(game.config.width / 3, game.config.height - 250,"platformY");
+            this.door.displayHeight = 400;
             this.door.body.allowGravity = false;
             this.door.setImmovable(true);
+            this.physics.add.collider(this.player2,this.door);
 
-            this.switch = this.physics.add.sprite(game.config / 2,game.config.height - 150, "switch");
+            this.switch = this.physics.add.sprite(game.config.width/ 2 - 100,game.config.height - 50, "switch");
+            this.switch.body.allowGravity = false;
             this.switch.setImmovable(true);
+
+            // box in box stack: width = 80, height = 80
+            // setting the first layer of the box stack
+            this.boxStack1 = this.physics.add.sprite(game.config.width/2 , game.config.height - 60, 'box').setScale(1);
+            this.physics.add.collider(this.boxStack1,this.ground);
+            this.physics.add.collider(this.boxStack1,this.player2);
+            this.physics.add.collider(this.boxStack1,this.player1);
+            this.boxStack1.setImmovable(true);
+            this.boxStack1.body.allowGravity = false;
+
+            this.boxStack2 = this.physics.add.sprite(game.config.width/2 +80, game.config.height - 60, 'box').setScale(1);
+            this.physics.add.collider(this.boxStack2,this.ground);
+            this.physics.add.collider(this.boxStack2,this.player2);
+            this.physics.add.collider(this.boxStack2,this.player1);
+            this.boxStack2.setImmovable(true);
+            this.boxStack2.body.allowGravity = false;
+
+            this.boxStack3 = this.physics.add.sprite(game.config.width/2 + 160, game.config.height - 60, 'box').setScale(1);
+            this.physics.add.collider(this.boxStack3,this.ground);
+            this.physics.add.collider(this.boxStack3,this.player2);
+            this.physics.add.collider(this.boxStack3,this.player1);
+            this.boxStack3.setImmovable(true);
+            this.boxStack3.body.allowGravity = false;
+
+            this.boxStack3 = this.physics.add.sprite(game.config.width/2 + 240, game.config.height - 60, 'box').setScale(1);
+            this.physics.add.collider(this.boxStack3,this.ground);
+            this.physics.add.collider(this.boxStack3,this.player2);
+            this.physics.add.collider(this.boxStack3,this.player1);
+            this.boxStack3.setImmovable(true);
+            this.boxStack3.body.allowGravity = false;
+            
+
+            // setting 2nd layer of the box stack
+            this.boxStack4 = this.physics.add.sprite(game.config.width/2 + 40, game.config.height - 140, 'box').setScale(1);
+            this.physics.add.collider(this.boxStack4,this.ground);
+            this.physics.add.collider(this.boxStack4,this.player2);
+            this.physics.add.collider(this.boxStack4,this.player1);
+            this.boxStack4.setImmovable(true);
+            this.boxStack4.body.allowGravity = false;
+
+            this.boxStack5 = this.physics.add.sprite(game.config.width/2 + 120, game.config.height - 140, 'box').setScale(1);
+            this.physics.add.collider(this.boxStack5,this.ground);
+            this.physics.add.collider(this.boxStack5,this.player2);
+            this.physics.add.collider(this.boxStack5,this.player1);
+            this.boxStack5.setImmovable(true);
+            this.boxStack5.body.allowGravity = false;
+
+            this.boxStack6 = this.physics.add.sprite(game.config.width/2 + 200, game.config.height - 140, 'box').setScale(1);
+            this.physics.add.collider(this.boxStack6,this.ground);
+            this.physics.add.collider(this.boxStack6,this.player2);
+            this.physics.add.collider(this.boxStack6,this.player1);
+            this.boxStack6.setImmovable(true);
+            this.boxStack6.body.allowGravity = false;
+
+            // 3rd layer of the box stack
+            this.boxStack7 = this.physics.add.sprite(game.config.width/2 + 120, game.config.height - 220, 'box').setScale(1);
+            this.physics.add.collider(this.boxStack7,this.ground);
+            this.physics.add.collider(this.boxStack7,this.player2);
+            this.physics.add.collider(this.boxStack7,this.player1);
+            this.boxStack7.setImmovable(true);
+            this.boxStack7.body.allowGravity = false;
+
+            // setting platform
+            this.platform = this.physics.add.sprite(game.config.width - 290, game.config.height -270, 'platform');
+            this.physics.add.collider(this.platform,this.player1);
+            this.physics.add.collider(this.platform,this.player2);
+            this.platform.setImmovable(true);
+            this.platform.body.allowGravity = false;
+            this.platform.displayWidth = 300;
+
+            // setting human
+            this.human = this.physics.add.sprite(game.config.width - 240, game.config.height - 80, 'human').setScale(0.3);
+            this.physics.add.collider(this.human,this.player1);
+            this.physics.add.collider(this.human,this.player2);
+            this.human.setImmovable(true);
+            this.human.body.allowGravity = false;
 
             // init key
             keyA = this.input.keyboard.addKey(65);
@@ -80,6 +159,13 @@ class Stage_2 extends Phaser.Scene{
             this.interact_button2 = false;
             this.interact_switch = false;
             
+            this.physics.add.overlap(this.player1,this.switch,function(){
+                if(keyE.isDown && !this.interact_switch){
+                    this.interact_switch = true;
+                    this.sound.play('switch');
+                }
+                //console.log(this.interact_switch)
+            },null,this);
 
     }    
 
@@ -87,6 +173,13 @@ class Stage_2 extends Phaser.Scene{
         this.player1.update();
         this.player2.update();
 
+        if(this.interact_switch){
+            this.door.visible = false;
+            this.door.setImmovable(false);
+            this.door.body.allowGravity = true;
+            this.door.setVelocityY(-500);
+            this.physics.world.removeCollider(this.door);
+        }
     }
 
 }
