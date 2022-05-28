@@ -6,16 +6,13 @@ class Stage_1 extends Phaser.Scene{
     preload(){
         this.load.image('stage1','./assets/backgrounds1.png');
         this.load.image('man','./assets/olman.png');
-        this.load.image('plat','./assets/platform.png');
-        this.load.image('platY','./assets/platformY.png');
+        this.load.image('plat','./assets/smallplat.png');
+        this.load.image('platform', './assets/wood_platform.png');
         this.load.image('switch','./assets/switch.jpg');
         this.load.image('monsterA','./assets/monsterA_idle.png');
-        this.load.image('box_fragile', './assets/box_fragile.png');
-        this.load.image('platform', './assets/wood_platform.png');
         this.load.image('crab', './assets/Crab.png');
-        this.load.image('platformY', './assets/wood_platformY.png');
+        this.load.atlas('crab_atlas', './assets/crabbertsheet.png', './assets/crabmap.json');
         this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
-        this.load.image('box', './assets/box.png');
 
         this.load.audio('switch','./assets/audio/switch.wav');
     }
@@ -56,50 +53,19 @@ class Stage_1 extends Phaser.Scene{
 
         // init ground and platform
         this.tutorial_bg = this.add.tileSprite(0, 0, 1200, 650, 'stage1').setOrigin(0, 0);
-        this.platform = this.physics.add.sprite(game.config.width/3,game.config.height/2 + 10,'platform');
-        this.platform.displayWidth = 900;
-        this.platform.body.allowGravity = false;
-        this.platform.setImmovable(true);
-        this.platform.setFrictionX(0);
-        this.ground = this.physics.add.sprite(game.config.width/2,game.config.height - 10,'platform');
+        this.ground = this.physics.add.sprite(game.config.width/2,game.config.height,'platform');
         this.ground.displayWidth = 1200;
         this.ground.body.allowGravity = false;
         this.ground.setImmovable(true);
         this.ground.setFrictionX(0);
 
-        this.wall = this.physics.add.sprite(game.config.width - 200, game.config.height - 160, 'platformY');
-        this.wall.displayHeight = 280;
-        this.wall.body.allowGravity = false;
-        this.wall.setImmovable(true);
-        this.wall.setFrictionX(0);
-
-        this.hatch = this.physics.add.sprite(game.config.width - 280, game.config.height/2 + 10, 'platform');
-        this.hatch.displayWidth = 140;
-        this.hatch.body.allowGravity = false;
-        this.hatch.setImmovable(true);
-        this.hatch.setFrictionX(0);
-
-        this.platform2 = this.physics.add.sprite(game.config.width - 95, game.config.height/2 + 10, 'platform');
-        this.platform2.displayWidth = 190;
-        this.platform2.body.allowGravity = false;
-        this.platform2.setImmovable(true);
-        this.platform2.setFriction(0);
-        
         // init players
-        this.player1 = new Player1(this,game.config.width/3 - 200, game.config.height - 100, 'monsterA');
+        this.player1 = new Player1(this,game.config.width/3 - 300, game.config.height - 100, 'monsterA');
         this.physics.add.collider(this.ground,this.player1);
-        this.physics.add.collider(this.wall, this.player1);
-        this.physics.add.collider(this.hatch, this.player1);
-        this.physics.add.collider(this.platform2, this.player1);
-        this.physics.add.collider(this.platform,this.player1);
         this.player1.setCollideWorldBounds(true);
 
-        this.player2 = new Player2(this,game.config.width/3 - 200, game.config.height/2 -100, 'crab');
-        this.physics.add.collider(this.platform,this.player2);
+        this.player2 = new Player2(this,game.config.width/3 - 370, game.config.height - 100, 'crab');
         this.physics.add.collider(this.ground, this.player2);
-        this.physics.add.collider(this.wall, this.player2);
-        this.physics.add.collider(this.hatch, this.player2);
-        this.physics.add.collider(this.platform2, this.player2);
         this.player2.setCollideWorldBounds(true);
 
         // init key
@@ -113,6 +79,7 @@ class Stage_1 extends Phaser.Scene{
         keyE = this.input.keyboard.addKey(69);
     //    keySpace = this.input.keyboard.addKey(32);
 
+        /*
         this.interact_button1 = false;
         this.interact_button2 = false;
         this.interact_switch = false;
@@ -121,30 +88,6 @@ class Stage_1 extends Phaser.Scene{
         this.switch = this.physics.add.sprite(game.config.width/3 + 200,game.config.height/2 -100, 'switch').setScale(1);
         this.switch.alpha = 0;
         this.physics.add.collider(this.switch,this.platform);
-
-        this.box = this.physics.add.sprite(game.config.width/3 + 20,game.config.height/2 - 40, 'box_fragile').setScale(1);
-        this.physics.add.collider(this.box,this.platform);
-        this.physics.add.collider(this.box,this.player2);
-        this.box.setImmovable(true);
-        this.box.body.allowGravity = false;
-
-        this.rock = this.physics.add.sprite(game.config.width - 250, game.config.height - 60, 'box_fragile').setScale(1);
-        this.rockPlat = this.physics.add.collider(this.rock,this.platform);
-        this.physics.add.collider(this.rock,this.player1);
-        this.physics.add.collider(this.rock, this.player2);
-        this.rock.setImmovable(true);
-        this.rock.body.allowGravity = false;
-
-        this.boxStack1 = this.physics.add.sprite(game.config.width - 260, game.config.height - 150, 'box').setScale(1.2);
-        this.physics.add.collider(this.boxStack1,this.player1);
-        this.physics.add.collider(this.boxStack1, this.player2);
-        this.boxStack1.setImmovable(true);
-        this.boxStack1.body.allowGravity = false;
-        this.boxStack2 = this.physics.add.sprite(game.config.width - 330, game.config.height - 60, 'box').setScale(1);
-        this.physics.add.collider(this.boxStack2,this.player1);
-        this.physics.add.collider(this.boxStack2, this.player2);
-        this.boxStack2.setImmovable(true);
-        this.boxStack2.body.allowGravity = false;
 
 
         this.button = this.physics.add.sprite(game.config.width, game.config.height/2 - 600, "box_fragile").setScale(1);
@@ -167,15 +110,8 @@ class Stage_1 extends Phaser.Scene{
                 this.interact_switch = true;
                 this.sound.play('switch');
             }
-            //console.log(this.interact_switch)
-        },null,this);
+        },null,this);*/
         
-        //this.intro = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2 - 50,"Player 1 is the top one, Controlled by Left Right Up arrow");
-        //this.intro2 = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2 - 20,"Able to double jump");
-        //this.intro3 = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2 + 10,"Player 2 is the bottom one, Controlled by WAD");
-        //this.intro4 = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2 + 30,"can wall climb by A/D + W to wall climb when blocked by object");
-        //this.intro5 = this.add.text(borderUISize + borderPadding, 320,"Player 1 can interact with the switch");
-        //this.intro9 = this.add.text(borderUISize + borderPadding, 350,"by pressing Down arrow when it is overlap with the switch");
     }
 
     update(){
@@ -187,6 +123,7 @@ class Stage_1 extends Phaser.Scene{
         } else if (keyA.isDown) {
             this.player1.anims.play('tenti_idle_left', true);
         }
+        /*
 
         if(this.interact_switch){
             
@@ -200,6 +137,6 @@ class Stage_1 extends Phaser.Scene{
         if(this.interact_button1 && this.interact_button2){
             this.scene.start("stageTwo");
             console.log("enter stage 2");
-        }
+        }*/
     }
 }
