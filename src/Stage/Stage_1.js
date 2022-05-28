@@ -61,26 +61,31 @@ class Stage_1 extends Phaser.Scene{
 
         this.plat1 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 100,"plat");
         this.plat1.body.allowGravity = false;
+        this.plat1.body.checkCollision.down = false;
         this.plat1.setImmovable(true);
         this.plat1.setFrictionX(0);
 
         this.plat2 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 160,"plat");
         this.plat2.body.allowGravity = false;
+        this.plat2.body.checkCollision.down = false;
         this.plat2.setImmovable(true);
         this.plat2.setFrictionX(0);
 
         this.plat3 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 230,"plat");
         this.plat3.body.allowGravity = false;
+        this.plat3.body.checkCollision.down = false;
         this.plat3.setImmovable(true);
         this.plat3.setFrictionX(0);
 
         this.plat4 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 305,"plat");
         this.plat4.body.allowGravity = false;
+        this.plat4.body.checkCollision.down = false;
         this.plat4.setImmovable(true);
         this.plat4.setFrictionX(0);
 
         this.plat5 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 360,"plat");
         this.plat5.body.allowGravity = false;
+        this.plat5.body.checkCollision.down = false;
         this.plat5.setImmovable(true);
         this.plat5.setFrictionX(0);
         
@@ -91,6 +96,11 @@ class Stage_1 extends Phaser.Scene{
 
         this.player2 = new Player2(this,game.config.width/3 - 370, game.config.height - 100, 'crab');
         this.physics.add.collider(this.ground, this.player2);
+        this.physics.add.collider(this.plat1, this.player2);
+        this.physics.add.collider(this.plat2, this.player2);
+        this.physics.add.collider(this.plat3, this.player2);
+        this.physics.add.collider(this.plat4, this.player2);
+        this.physics.add.collider(this.plat5, this.player2);
         this.player2.setCollideWorldBounds(true);
 
         // init key
@@ -147,6 +157,10 @@ class Stage_1 extends Phaser.Scene{
             this.player1.anims.play('tenti_idle_right', true);
         } else if (keyA.isDown) {
             this.player1.anims.play('tenti_idle_left', true);
+        }
+
+        if(keyUP.isDown){
+
         }
         /*
 
