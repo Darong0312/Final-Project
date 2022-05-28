@@ -59,6 +59,11 @@ class Stage_1 extends Phaser.Scene{
         this.ground.setImmovable(true);
         this.ground.setFrictionX(0);
 
+        this.plat1 = this.physics.add.sprite(this,game.config.width/3 - 100, game.config.height - 200,"plat");
+        this.plat1.body.allowGravity = false;
+        this.ground.setImmovable(true);
+        this.ground.setFrictionX(0);
+        
         // init players
         this.player1 = new Player1(this,game.config.width/3 - 300, game.config.height - 100, 'monsterA');
         this.physics.add.collider(this.ground,this.player1);
