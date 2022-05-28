@@ -7,6 +7,7 @@ class Stage_1 extends Phaser.Scene{
         this.load.image('stage1','./assets/backgrounds1.png');
         this.load.image('man','./assets/olman.png');
         this.load.image('plat','./assets/ladder.png');
+        this.load.image('platup','./assets/platup.png');
         this.load.image('platform', './assets/wood_platform.png');
         this.load.image('switch','./assets/switch.jpg');
         this.load.image('monsterA','./assets/monsterA_idle.png');
@@ -65,11 +66,11 @@ class Stage_1 extends Phaser.Scene{
         this.plat1.setImmovable(true);
         this.plat1.setFrictionX(0);
 
-        this.plat2 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 160,"plat");
+        /*this.plat2 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 160,"plat");
         this.plat2.body.allowGravity = false;
         this.plat2.body.checkCollision.down = false;
         this.plat2.setImmovable(true);
-        this.plat2.setFrictionX(0);
+        this.plat2.setFrictionX(0);*/
 
         this.plat3 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 230,"plat");
         this.plat3.body.allowGravity = false;
@@ -77,17 +78,23 @@ class Stage_1 extends Phaser.Scene{
         this.plat3.setImmovable(true);
         this.plat3.setFrictionX(0);
 
-        this.plat4 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 305,"plat");
+        /*this.plat4 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 305,"plat");
         this.plat4.body.allowGravity = false;
         this.plat4.body.checkCollision.down = false;
         this.plat4.setImmovable(true);
-        this.plat4.setFrictionX(0);
+        this.plat4.setFrictionX(0);*/
 
         this.plat5 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 360,"plat");
         this.plat5.body.allowGravity = false;
         this.plat5.body.checkCollision.down = false;
         this.plat5.setImmovable(true);
         this.plat5.setFrictionX(0);
+
+        this.platup = this.physics.add.sprite(game.config.width/3 + 20, game.config.height - 505,"platup");
+        this.platup.body.allowGravity = false;
+        this.platup.body.checkCollision.down = false;
+        this.platup.setImmovable(true);
+        this.platup.setFrictionX(0);
         
         // init players
         this.player1 = new Player1(this,game.config.width/3 - 300, game.config.height - 100, 'monsterA');
@@ -97,10 +104,11 @@ class Stage_1 extends Phaser.Scene{
         this.player2 = new Player2(this,game.config.width/3 - 370, game.config.height - 100, 'crab');
         this.physics.add.collider(this.ground, this.player2);
         this.physics.add.collider(this.plat1, this.player2);
-        this.physics.add.collider(this.plat2, this.player2);
+        //this.physics.add.collider(this.plat2, this.player2);
         this.physics.add.collider(this.plat3, this.player2);
-        this.physics.add.collider(this.plat4, this.player2);
+        //this.physics.add.collider(this.plat4, this.player2);
         this.physics.add.collider(this.plat5, this.player2);
+        this.physics.add.collider(this.platup, this.player2);
         this.player2.setCollideWorldBounds(true);
 
         // init key
