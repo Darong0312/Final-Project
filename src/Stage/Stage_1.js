@@ -6,7 +6,7 @@ class Stage_1 extends Phaser.Scene{
     preload(){
         this.load.image('stage1','./assets/backgrounds1.png');
         this.load.image('man','./assets/olman.png');
-        this.load.image('plat','./assets/smallplat.png');
+        this.load.image('plat','./assets/ladder.png');
         this.load.image('platform', './assets/wood_platform.png');
         this.load.image('switch','./assets/switch.jpg');
         this.load.image('monsterA','./assets/monsterA_idle.png');
@@ -59,10 +59,30 @@ class Stage_1 extends Phaser.Scene{
         this.ground.setImmovable(true);
         this.ground.setFrictionX(0);
 
-        this.plat1 = this.physics.add.sprite(this,game.config.width/3 - 100, game.config.height - 200,"plat");
+        this.plat1 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 100,"plat");
         this.plat1.body.allowGravity = false;
-        this.ground.setImmovable(true);
-        this.ground.setFrictionX(0);
+        this.plat1.setImmovable(true);
+        this.plat1.setFrictionX(0);
+
+        this.plat2 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 160,"plat");
+        this.plat2.body.allowGravity = false;
+        this.plat2.setImmovable(true);
+        this.plat2.setFrictionX(0);
+
+        this.plat3 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 230,"plat");
+        this.plat3.body.allowGravity = false;
+        this.plat3.setImmovable(true);
+        this.plat3.setFrictionX(0);
+
+        this.plat4 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 305,"plat");
+        this.plat4.body.allowGravity = false;
+        this.plat4.setImmovable(true);
+        this.plat4.setFrictionX(0);
+
+        this.plat5 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 360,"plat");
+        this.plat5.body.allowGravity = false;
+        this.plat5.setImmovable(true);
+        this.plat5.setFrictionX(0);
         
         // init players
         this.player1 = new Player1(this,game.config.width/3 - 300, game.config.height - 100, 'monsterA');
