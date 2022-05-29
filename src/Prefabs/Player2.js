@@ -11,7 +11,6 @@ class Player2 extends Phaser.Physics.Arcade.Sprite{
 
         this.interact = false;
 
-
         // player 2 run right
         this.anims.create({
             key: 'crab_run_right',

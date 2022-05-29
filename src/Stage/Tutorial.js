@@ -6,10 +6,7 @@ class Tutorial extends Phaser.Scene{
 
     preload(){
         this.load.image('back','./assets/tutorial_bg.png');
-        this.load.image('plat','./assets/platform.png');
-        this.load.image('platY','./assets/platformY.png');
         this.load.image('switch','./assets/switch.jpg');
-        this.load.image('rock','./assets/rock.png');
         this.load.image('monsterA','./assets/monsterA_idle.png');
         this.load.image('tutorial_bg', './assets/tutorial_bg.png');
         this.load.image('box_fragile', './assets/box_fragile.png');
@@ -19,13 +16,7 @@ class Tutorial extends Phaser.Scene{
         this.load.image('box', './assets/box.png');
         this.load.atlas('crab_atlas', './assets/crabbertsheet.png', './assets/crabmap.json');
         this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
-
-        this.load.spritesheet('fox','./assets/foxani.png', {
-            frameWidth: 48,
-            frameHeight: 72,
-            startFrame:0,
-            endFrame: 5
-        });
+        this.load.image('crabJump', './assets/CrabJump.png');
 
         this.load.audio('switch','./assets/audio/switch.wav');
     }
@@ -110,12 +101,12 @@ class Tutorial extends Phaser.Scene{
         this.box.setImmovable(true);
         this.box.body.allowGravity = false;
 
-        this.rock = this.physics.add.sprite(game.config.width - 250, game.config.height - 60, 'box_fragile').setScale(1);
-        this.rockPlat = this.physics.add.collider(this.rock,this.platform);
-        this.physics.add.collider(this.rock,this.player1);
-        this.physics.add.collider(this.rock, this.player2);
-        this.rock.setImmovable(true);
-        this.rock.body.allowGravity = false;
+        this.box2 = this.physics.add.sprite(game.config.width - 250, game.config.height - 60, 'box_fragile').setScale(1);
+        this.rockPlat = this.physics.add.collider(this.box2,this.platform);
+        this.physics.add.collider(this.box2,this.player1);
+        this.physics.add.collider(this.box2, this.player2);
+        this.box2.setImmovable(true);
+        this.box2.body.allowGravity = false;
 
         this.boxStack1 = this.physics.add.sprite(game.config.width - 260, game.config.height - 150, 'box').setScale(1.2);
         this.physics.add.collider(this.boxStack1,this.player1);

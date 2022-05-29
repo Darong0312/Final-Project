@@ -58,22 +58,56 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
             repeat: -1,
             yoyo: true
         });
+        //player 1 run right
+        this.anims.create({
+            key: 'tenti_run_right',
+            frames: this.anims.generateFrameNames('tenti_atlas', {
+                prefix: 'tenti_run_right_',
+                start: 1,
+                end: 8,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 13,
+            repeat: -1,
+        });
+        //player 1 run left
+        this.anims.create({
+            key: 'tenti_run_left',
+            frames: this.anims.generateFrameNames('tenti_atlas', {
+                prefix: 'tenti_run_left_',
+                start: 1,
+                end: 8,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 13,
+            repeat: -1
+        });
     }
 
     update(){
         this.setVelocityX(0);
 
-        if(!this.anims.isPlaying) {
+        if(!keyA.isDown && !keyD.isDown && this.anims.isPlaying) {
+            if(this.anims.currentAnim.key === 'tenti_run_left') {
+                this.anims.play('tenti_idle_left', true);
+            }
+            else if (this.anims.currentAnim.key === 'tenti_run_right') {
+                this.anims.play('tenti_idle_right', true);
+            }
+        }
+        else if (!keyA.isDown && !keyD.isDown && !this.anims.isPlaying) {
             this.anims.play('tenti_idle_right', true);
         }
 
         if(keyA.isDown){
             this.setVelocityX(-speed);
-            this.anims.play('tenti_idle_left', true);
+            this.anims.play('tenti_run_left', true);
         }
         else if(keyD.isDown){
             this.setVelocityX(speed);
-            this.anims.play('tenti_idle_right', true);
+            this.anims.play('tenti_run_right', true);
         }
 
         if(keyW.isDown && this.body.blocked.right){
