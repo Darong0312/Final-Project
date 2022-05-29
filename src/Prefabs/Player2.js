@@ -53,7 +53,7 @@ class Player2 extends Phaser.Physics.Arcade.Sprite{
         if(keyUP.isDown){
             if(!this.jump){
                 if(this.jumpCount > 0){
-                    this.setVelocityY(-250);
+                    this.setVelocityY(-300);
                     this.jump = true;
                     --this.jumpCount;
                 }
