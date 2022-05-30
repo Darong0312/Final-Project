@@ -19,6 +19,8 @@ class Tutorial extends Phaser.Scene{
         this.load.image('crabJump', './assets/CrabJump.png');
 
         this.load.audio('switch','./assets/audio/switch.wav');
+        this.load.audio('jump', './assets/audio/jump.wav');
+        this.load.audio('climb', './assets/audio/climb.wav');
     }
 
     create(){
@@ -26,6 +28,12 @@ class Tutorial extends Phaser.Scene{
         //this.physics.world.setBounds(0,0,800,600,true,true,true,false);
         //set background
         let bg = this.add.image(game.config.width/2, game.config.height/2,"back");
+
+        //stuff so sound only repeats after completely playing once
+        this.sfxJump = this.sound.add('jump');
+        this.sfxJumpIsPlaying = false;
+        this.sfxClimb = this.sound.add('climb');
+        this.sfxClimbIsPlaying = false;
 
         // init ground and platform
         this.tutorial_bg = this.add.tileSprite(0, 0, 1200, 650, 'tutorial_bg').setOrigin(0, 0);
@@ -159,6 +167,33 @@ class Tutorial extends Phaser.Scene{
     update(){
         this.player1.update();
         this.player2.update();
+
+        //player 2 jump sfx
+        if (this.player2.jump) {
+            if (!this.sfxJumpIsPlaying) {
+                this.sfxJump.play();
+            }
+            this.sfxJump.on('play', () => {
+                this.sfxJumpIsPlaying = true;
+                this.sfxJump.on('complete', () => {
+                    this.sfxJumpIsPlaying = false;
+                });
+            });
+        }
+        //player 1 climb sfx
+        if((keyW.isDown && this.player1.body.blocked.right) || (keyW.isDown && this.player1.body.blocked.left)){
+            if(this.player1.climbTime > 0 ) {
+                if (!this.sfxClimbIsPlaying) {
+                    this.sfxClimb.play();
+                }
+                this.sfxClimb.on('play', () => {
+                    this.sfxClimbIsPlaying = true;
+                    this.sfxClimb.on('complete', () => {
+                        this.sfxClimbIsPlaying = false;
+                    });
+                });
+            }
+        }
 
         if(this.interact_switch){
             
