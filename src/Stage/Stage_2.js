@@ -14,12 +14,12 @@ class Stage_2 extends Phaser.Scene{
         this.load.image('tutorial_bg', './assets/tutorial_bg.png');
         this.load.image('box_fragile', './assets/box_fragile.png');
         this.load.image('platform', './assets/wood_platform.png');
-        this.load.image('platformY', './assets/wood_platformY.png');
         this.load.image('crab', './assets/Crab.png');
         this.load.image('platformY', './assets/wood_platformY.png');
-        this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
         this.load.image('box', './assets/box.png');
-        this.load.image('human','./assets/human.png');
+        this.load.image('human','./assets/olman.png');
+        this.load.atlas('crab_atlas', './assets/crabbertsheet.png', './assets/crabmap.json');
+        this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
 
         this.load.audio('switch','./assets/audio/switch.wav');
     }
@@ -136,6 +136,13 @@ class Stage_2 extends Phaser.Scene{
             this.platform.body.allowGravity = false;
             this.platform.displayWidth = 300;
 
+            // setting sight
+            this.sight = this.physics.add.sprite(game.config.width - 150, game.config.height - 100).setScale(10);
+            this.physics.add.collider(this.sight,this.player1);
+            this.physics.add.collider(this.sight,this.player2);
+            this.sight.setImmovable(true);
+            this.sight.body.allowGravity = false;
+
             // setting human
             this.human = this.physics.add.sprite(game.config.width - 240, game.config.height - 80, 'human').setScale(0.3);
             this.physics.add.collider(this.human,this.player1);
@@ -155,9 +162,9 @@ class Stage_2 extends Phaser.Scene{
             keyShift = this.input.keyboard.addKey(16);
             keySpace = this.input.keyboard.addKey(32);
         
-            this.interact_button1 = false;
-            this.interact_button2 = false;
             this.interact_switch = false;
+            this.humanSight = false;
+            this.gameOver = false;
             
             this.physics.add.overlap(this.player1,this.switch,function(){
                 if(keyE.isDown && !this.interact_switch){
@@ -167,11 +174,19 @@ class Stage_2 extends Phaser.Scene{
                 //console.log(this.interact_switch)
             },null,this);
 
+            // sight overlap
+            this.sightBox = this.physics.add.overlap(this.player1,this.switch,function(){
+                this.humanSight = true;
+            },null,this);
     }    
 
     update(){
         this.player1.update();
         this.player2.update();
+
+        if(this.gameOver){
+            this.scene.restart();
+        }
 
         if(this.interact_switch){
             this.door.visible = false;
