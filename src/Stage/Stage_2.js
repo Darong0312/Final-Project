@@ -139,8 +139,12 @@ class Stage_2 extends Phaser.Scene{
 
             // setting sight
             this.sight = this.physics.add.sprite(game.config.width - 150, game.config.height - 100).setScale(10);
-            this.physics.add.collider(this.sight,this.player1);
-            this.physics.add.collider(this.sight,this.player2);
+            this.physics.add.overlap(this.sight,this.player1,function(){
+                this.gameOver = true;
+            },null,this);
+            this.physics.add.overlap(this.sight,this.player2,function(){
+                this.gameOver = true;
+            },null,this);
             this.sight.setImmovable(true);
             this.sight.body.allowGravity = false;
 
@@ -152,7 +156,7 @@ class Stage_2 extends Phaser.Scene{
             this.human.body.allowGravity = false;
 
             // setting lunch box, need to replace the texture later
-            this.lunch = this.physics.add.sprite(game.config.width - 290, game.config.height -400, 'box');
+            this.lunch = this.physics.add.sprite(game.config.width - 290, game.config.height -400, 'box').setScale(0.8);
             this.box.setImmovable(true);
             this.box.body.allowGravity = false;
 
