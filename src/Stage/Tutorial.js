@@ -145,15 +145,7 @@ class Tutorial extends Phaser.Scene{
                 this.interact_switch = true;
                 this.sound.play('switch');
             }
-            //console.log(this.interact_switch)
         },null,this);
-        
-        //this.intro = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2 - 50,"Player 1 is the top one, Controlled by Left Right Up arrow");
-        //this.intro2 = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2 - 20,"Able to double jump");
-        //this.intro3 = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2 + 10,"Player 2 is the bottom one, Controlled by WAD");
-        //this.intro4 = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2 + 30,"can wall climb by A/D + W to wall climb when blocked by object");
-        //this.intro5 = this.add.text(borderUISize + borderPadding, 320,"Player 1 can interact with the switch");
-        //this.intro9 = this.add.text(borderUISize + borderPadding, 350,"by pressing Down arrow when it is overlap with the switch");
     }
 
     update(){
@@ -170,8 +162,7 @@ class Tutorial extends Phaser.Scene{
         }
 
         if(this.interact_button1 && this.interact_button2){
-            this.scene.start("stageOne");
-            console.log("go to stage 1");
+            this.scene.start("stageTwo");
         }
 
     }
