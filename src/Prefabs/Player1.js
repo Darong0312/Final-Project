@@ -84,6 +84,32 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
             frameRate: 13,
             repeat: -1
         });
+        //player 1 squish right
+        this.anims.create({
+            key: 'tenti_squish_right',
+            frames: this.anims.generateFrameNames('tenti_atlas', {
+                prefix: 'tenti_squish_right_',
+                start: 1,
+                end: 5,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 10,
+            repeat: 0,
+        });
+        //player 1 squish left
+        this.anims.create({
+            key: 'tenti_squish_left',
+            frames: this.anims.generateFrameNames('tenti_atlas', {
+                prefix: 'tenti_squish_left_',
+                start: 1,
+                end: 5,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 10,
+            repeat: 0,
+        });
     }
 
     update(){
@@ -136,6 +162,15 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
         }
         else{
             this.climbTimer.paused = false;
+        }
+
+        if (keyS.isDown) {
+            if (this.anims.currentAnim.key === 'tenti_idle_right' || this.anims.currentAnim.key === 'tenti_run_right') {
+                this.anims.play('tenti_squish_right');
+            }
+            else if (keyS.isDown && this.anims.currentAnim.key === 'tenti_idle_left' || this.anims.currentAnim.key === 'tenti_run_left') {
+                this.anims.play('tenti_squish_left');
+            }
         }
         
     }

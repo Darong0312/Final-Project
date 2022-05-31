@@ -87,6 +87,7 @@ class Tutorial extends Phaser.Scene{
         keyA = this.input.keyboard.addKey(65);
         keyD = this.input.keyboard.addKey(68);
         keyW = this.input.keyboard.addKey(87);
+        keyS = this.input.keyboard.addKey(83);
         keyLEFT = this.input.keyboard.addKey(37);
         keyRIGHT = this.input.keyboard.addKey(39);
         keyUP = this.input.keyboard.addKey(38);
