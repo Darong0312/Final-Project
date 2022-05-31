@@ -164,6 +164,7 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
             this.climbTimer.paused = false;
         }
 
+        //tenti squish
         if (keyS.isDown) {
             if (this.anims.currentAnim.key === 'tenti_idle_right' || this.anims.currentAnim.key === 'tenti_run_right') {
                 this.anims.play('tenti_squish_right');
