@@ -199,7 +199,7 @@ class Tutorial extends Phaser.Scene{
         }
 
         if(this.interact_button1 && this.interact_button2){
-            this.scene.start("stageTwo");
+            this.scene.start("stageOne");
         }
 
     }
