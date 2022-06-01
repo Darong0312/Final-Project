@@ -6,21 +6,19 @@ class Stage_2 extends Phaser.Scene{
 
     preload(){
         this.load.image('back','./assets/tutorial_bg.png');
-        this.load.image('plat','./assets/platform.png');
-        this.load.image('platY','./assets/platformY.png');
         this.load.image('switch','./assets/switch.jpg');
-        this.load.image('rock','./assets/rock.png');
         this.load.image('monsterA','./assets/monsterA_idle.png');
-        this.load.image('tutorial_bg', './assets/tutorial_bg.png');
+        this.load.image('stage1Bg', './assets/backgrounds1.png');
         this.load.image('box_fragile', './assets/box_fragile.png');
         this.load.image('platform', './assets/wood_platform.png');
         this.load.image('crab', './assets/Crab.png');
         this.load.image('platformY', './assets/wood_platformY.png');
         this.load.image('box', './assets/box.png');
         this.load.image('human','./assets/olman.png');
-        this.load.image('stage_2','./assets/stage_2');
+        this.load.image('stage_2','./assets/stage_2.jpg');
         this.load.atlas('crab_atlas', './assets/crabbertsheet.png', './assets/crabmap.json');
         this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
+        this.load.atlas('human_atlas', './assets/humansheet.png', './assets/humanmap.json');
 
         this.load.audio('switch','./assets/audio/switch.wav');
     }
@@ -34,7 +32,7 @@ class Stage_2 extends Phaser.Scene{
             let bg = this.add.image(game.config.width/2, game.config.height/2,"back");
     
             // init ground and platform
-            this.tutorial_bg = this.add.tileSprite(0, 0, 1200, 650, 'tutorial_bg').setOrigin(0, 0);
+            this.tutorial_bg = this.add.tileSprite(0, 0, 1200, 650, 'stage1Bg').setOrigin(0, 0);
 
             this.ground = this.physics.add.sprite(game.config.width/2,game.config.height - 10,'platform');
             this.ground.displayWidth = 1200;
@@ -149,11 +147,28 @@ class Stage_2 extends Phaser.Scene{
             this.sight.body.allowGravity = false;
 
             // setting human
-            this.human = this.physics.add.sprite(game.config.width - 240, game.config.height - 80, 'human').setScale(0.3);
+            this.human = this.physics.add.sprite(game.config.width - 240, game.config.height - 120, 'human').setScale(1);
             this.physics.add.collider(this.human,this.player1);
             this.physics.add.collider(this.human,this.player2);
             this.human.setImmovable(true);
             this.human.body.allowGravity = false;
+
+            // human sweep left
+            this.anims.create({
+                key: 'man_sweep_left',
+                frames: this.anims.generateFrameNames('human_atlas', {
+                    prefix: 'man_sweep_left_',
+                    start: 1,
+                    end: 3,
+                    suffix: '',
+                    zeroPad: 4
+                }),
+                frameRate: 10,
+                repeat: -1,
+                repeatDelay: 300,
+                yoyo: true
+            });
+            this.human.anims.play('man_sweep_left', true);
 
             // setting lunch box, need to replace the texture later
             this.lunch = this.physics.add.sprite(game.config.width - 290, game.config.height -400, 'box').setScale(0.8);

@@ -5,7 +5,7 @@ class Stage_1 extends Phaser.Scene{
 
     preload(){
         this.load.image('stage1','./assets/backgrounds1.png');
-        this.load.image('man','./assets/olman.png');
+        this.load.image('man','./assets/human.png');
         this.load.image('plat','./assets/ladder.png');
         this.load.image('platup','./assets/platup.png');
         this.load.image('platform', './assets/wood_platform.png');
@@ -110,8 +110,8 @@ class Stage_1 extends Phaser.Scene{
         this.highwall.setFrictionX(0);
 
         this.man = this.physics.add.sprite(game.config.width/3 + 160, game.config.height - 150, 'man');
-        this.man.displayWidth = 180;
-        this.man.displayHeight = 280;
+        //this.man.displayWidth = 180;
+        //this.man.displayHeight = 280;
         this.man.body.allowGravity = false;
         this.physics.add.collider(this.ground, this.man);
 

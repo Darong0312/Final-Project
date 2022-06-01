@@ -17,6 +17,7 @@ class Tutorial extends Phaser.Scene{
         this.load.atlas('crab_atlas', './assets/crabbertsheet.png', './assets/crabmap.json');
         this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
         this.load.image('crabJump', './assets/CrabJump.png');
+        this.load.image('hatch', './assets/hatch.png');
 
         this.load.audio('switch','./assets/audio/switch.wav');
         this.load.audio('jump', './assets/audio/jump.wav');
@@ -54,7 +55,7 @@ class Tutorial extends Phaser.Scene{
         this.wall.setImmovable(true);
         this.wall.setFrictionX(0);
 
-        this.hatch = this.physics.add.sprite(game.config.width - 280, game.config.height/2 + 10, 'platform');
+        this.hatch = this.physics.add.sprite(game.config.width - 280, game.config.height/2 + 10, 'hatch');
         this.hatch.displayWidth = 140;
         this.hatch.body.allowGravity = false;
         this.hatch.setImmovable(true);
