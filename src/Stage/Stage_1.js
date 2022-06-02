@@ -18,6 +18,7 @@ class Stage_1 extends Phaser.Scene{
         this.load.image('box_fragile', './assets/box_fragile.png');
         this.load.atlas('crab_atlas', './assets/crabbertsheet.png', './assets/crabmap.json');
         this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
+        this.load.atlas('human_atlas', './assets/humansheet.png', './assets/humanmap.json');
 
         this.load.audio('switch','./assets/audio/switch.wav');
         this.load.audio('jump', './assets/audio/jump.wav');
@@ -27,6 +28,11 @@ class Stage_1 extends Phaser.Scene{
     create(){
         //set background
         let bg = this.add.image(game.config.width/2, game.config.height/2,"stage1");
+
+        this.sfxJump = this.sound.add('jump');
+        this.sfxJumpIsPlaying = false;
+        this.sfxClimb = this.sound.add('climb');
+        this.sfxClimbIsPlaying = false;
 
 
         // player 1 Idle right
@@ -117,6 +123,22 @@ class Stage_1 extends Phaser.Scene{
         //this.man.displayHeight = 280;
         this.man.body.allowGravity = false;
         this.physics.add.collider(this.ground, this.man);
+
+        this.anims.create({
+            key: 'man_sweep_left',
+            frames: this.anims.generateFrameNames('human_atlas', {
+                prefix: 'man_sweep_left_',
+                start: 1,
+                end: 3,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 10,
+            repeat: -1,
+            repeatDelay: 300,
+            yoyo: true
+        });
+        this.man.anims.play('man_sweep_left', true);
 
         
         // init players
@@ -231,6 +253,33 @@ class Stage_1 extends Phaser.Scene{
 
         if(this.gameover){
             this.scene.restart();
+        }
+
+        //player 2 jump sfx
+        if (this.player2.jump) {
+            if (!this.sfxJumpIsPlaying) {
+                this.sfxJump.play();
+            }
+            this.sfxJump.on('play', () => {
+                this.sfxJumpIsPlaying = true;
+                this.sfxJump.on('complete', () => {
+                    this.sfxJumpIsPlaying = false;
+                });
+            });
+        }
+        //player 1 climb sfx
+        if((keyW.isDown && this.player1.body.blocked.right) || (keyW.isDown && this.player1.body.blocked.left)){
+            if(this.player1.climbTime > 0 ) {
+                if (!this.sfxClimbIsPlaying) {
+                    this.sfxClimb.play();
+                }
+                this.sfxClimb.on('play', () => {
+                    this.sfxClimbIsPlaying = true;
+                    this.sfxClimb.on('complete', () => {
+                        this.sfxClimbIsPlaying = false;
+                    });
+                });
+            }
         }
 
         if (keyD.isDown || !this.player1.anims.isPlaying) {
