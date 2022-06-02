@@ -206,6 +206,7 @@ class Stage_1 extends Phaser.Scene{
         this.arrow = this.physics.add.sprite(game.config.width/3 -50, game.config.height - 555, 'arrow').setScale(1);
         this.arrow.setImmovable(true);
         this.arrow.body.allowGravity = false;
+        this.arrow.visible = false;
 
         //init open lamp
         this.oplamp = this.physics.add.sprite(game.config.width/3 + 130, game.config.height - 355 , 'oplamp').setScale(1);
@@ -222,6 +223,7 @@ class Stage_1 extends Phaser.Scene{
         this.be = this.physics.add.sprite(game.config.width-110, game.config.height - 160, 'be').setScale(1);
         this.be.setImmovable(true);
         this.be.body.allowGravity = false;
+        this.be.visible = false;
 
         this.gameover = false;
 
@@ -317,6 +319,20 @@ class Stage_1 extends Phaser.Scene{
                     });
                 });
             }
+        }
+
+        if(this.switch.body.touching.none){
+            this.arrow.visible = false;
+        }
+        else{
+            this.arrow.visible = true;
+        }
+
+        if(this.switch2.body.touching.none){
+            this.be.visible = false;
+        }
+        else{
+            this.be.visible = true;
         }
 
         if (keyD.isDown || !this.player1.anims.isPlaying) {

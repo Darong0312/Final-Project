@@ -103,22 +103,27 @@ class Tutorial extends Phaser.Scene{
         this.interact_switch = false;
 
         //arrow init
-        this.arrow = this.physics.add.sprite(game.config.width/3 + 200,game.config.height/2 -90, 'arrow').setScale(1);
+        this.arrow = this.physics.add.sprite(game.config.width/3 + 200,game.config.height/2 -100, 'arrow').setScale(1);
         this.arrow.setImmovable(true);
         this.arrow.body.allowGravity = false;
+        this.arrow.visible = false;
 
         this.arrow2 = this.physics.add.sprite(game.config.width-60, game.config.height/2 - 120, 'arrow').setScale(1);
         this.arrow2.setImmovable(true);
         this.arrow2.body.allowGravity = false;
+        this.arrow2.visible = false;
 
         this.be = this.physics.add.sprite(game.config.width-20, game.config.height/2 - 120, 'be').setScale(1);
         this.be.setImmovable(true);
         this.be.body.allowGravity = false;
+        this.be.visible = false;
 
         // init interact
-        this.switch = this.physics.add.sprite(game.config.width/3 + 200,game.config.height/2 -100, 'switch').setScale(1);
+        this.switch = this.physics.add.sprite(game.config.width/3 + 200,game.config.height/2 -50, 'switch').setScale(1);
         this.switch.alpha = 0;
         this.physics.add.collider(this.switch,this.platform);
+        this.switch.body.allowGravity = false;
+        this.switch.setImmovable(true);
 
         this.box = this.physics.add.sprite(game.config.width/3 + 20,game.config.height/2 - 40, 'box_fragile').setScale(1);
         this.physics.add.collider(this.box,this.platform);
@@ -150,7 +155,9 @@ class Tutorial extends Phaser.Scene{
         //this.playerGroup.add(playert2);
 
 
-        this.button = this.physics.add.sprite(game.config.width, game.config.height/2 - 600, "box_fragile").setScale(1);
+        this.button = this.physics.add.sprite(game.config.width, game.config.height/2-40, "box_fragile").setScale(1);
+        this.button.setImmovable(true);
+        this.button.body.allowGravity = false;
         this.physics.add.collider(this.button,this.platform2); //tutorial end box
         this.player1_button = this.physics.add.overlap(this.player1,this.button,function(){
             if(keyE.isDown){
@@ -202,6 +209,22 @@ class Tutorial extends Phaser.Scene{
                     });
                 });
             }
+        }
+
+        if(this.switch.body.touching.none){
+            this.arrow.visible = false;
+        }
+        else{
+            this.arrow.visible = true;
+        }
+
+        if(this.button.body.touching.none){
+            this.arrow2.visible = false;
+            this.be.visible = false;
+        }
+        else{
+            this.arrow2.visible = true;
+            this.be.visible = true;
         }
 
         if(this.interact_switch){
