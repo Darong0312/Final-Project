@@ -223,6 +223,7 @@ class Stage_2 extends Phaser.Scene{
             // setting lunch box, need to replace the texture later
             this.lunch = this.physics.add.sprite(game.config.width - 290, game.config.height -400, 'box').setScale(0.8).setBounce(0).setCollideWorldBounds(true);
             this.physics.add.collider(this.lunch, this.player2);
+            this.physics.add.collider(this.lunch, this.ground);
 
             // init key
             keyA = this.input.keyboard.addKey(65);
