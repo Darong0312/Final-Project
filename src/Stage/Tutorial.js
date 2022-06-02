@@ -18,6 +18,7 @@ class Tutorial extends Phaser.Scene{
         this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
         this.load.image('crabJump', './assets/CrabJump.png');
         this.load.image('hatch', './assets/hatch.png');
+        this.load.image('down_key','./assets/arrow_down_key.png');
 
         this.load.audio('switch','./assets/audio/switch.wav');
         this.load.audio('jump', './assets/audio/jump.wav');
@@ -101,9 +102,17 @@ class Tutorial extends Phaser.Scene{
         this.interact_switch = false;
 
         // init interact
-        this.switch = this.physics.add.sprite(game.config.width/3 + 200,game.config.height/2 -100, 'switch').setScale(1);
+        this.switch = this.physics.add.sprite(game.config.width/3 + 200,game.config.height/2 -50, 'switch').setScale(1);
         this.switch.alpha = 0;
         this.physics.add.collider(this.switch,this.platform);
+        this.switch.body.allowGravity = false;
+        this.switch.setImmovable(true);
+
+        // instruction box
+        this.inBox = this.physics.add.sprite(game.config.width/3 + 200, game.config.height/2 - 100, 'down_key');
+        this.inBox.body.allowGravity = false;
+        this.inBox.setImmovable(true);
+        this.inBox.visible =false;
 
         this.box = this.physics.add.sprite(game.config.width/3 + 20,game.config.height/2 - 40, 'box_fragile').setScale(1);
         this.physics.add.collider(this.box,this.platform);
@@ -196,6 +205,13 @@ class Tutorial extends Phaser.Scene{
             this.hatch.body.allowGravity = true;
             this.hatch.setVelocityY(-500);
             this.physics.world.removeCollider(this.hatch);
+        }
+
+        if(this.switch.body.touching.none){
+            this.inBox.visible = false;
+        }
+        else{
+            this.inBox.visible = true;
         }
 
         if(this.interact_button1 && this.interact_button2){
