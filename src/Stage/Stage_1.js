@@ -123,13 +123,13 @@ class Stage_1 extends Phaser.Scene{
         this.player1 = new Player1(this,game.config.width/3 - 300, game.config.height - 100, 'monsterA');
         this.physics.add.collider(this.ground,this.player1);
         this.physics.add.collider(this.highwall, this.player1);
-        var p1wall = this.physics.add.collider(this.bigwall, this.player1);
+        this.physics.add.collider(this.bigwall, this.player1);
         this.player1.setCollideWorldBounds(true);
 
         this.player2 = new Player2(this,game.config.width/3 - 380, game.config.height - 100, 'crab');
         this.physics.add.collider(this.ground, this.player2);
         this.physics.add.collider(this.highwall, this.player2);
-        var p2wall = this.physics.add.collider(this.bigwall, this.player2);
+        this.physics.add.collider(this.bigwall, this.player2);
         this.physics.add.collider(this.plat1, this.player2);
         //this.physics.add.collider(this.plat2, this.player2);
         this.physics.add.collider(this.plat3, this.player2);
@@ -138,7 +138,7 @@ class Stage_1 extends Phaser.Scene{
         this.physics.add.collider(this.platup, this.player2);
         this.player2.setCollideWorldBounds(true);
 
-        this.box = this.physics.add.sprite(game.config.width-100, game.config.height - 50, 'box').setScale(1);
+        this.box = this.physics.add.sprite(game.config.width-120, game.config.height - 50, 'box').setScale(1);
         this.physics.add.collider(this.box,this.ground);
         this.physics.add.collider(this.box,this.player2);
         this.physics.add.collider(this.box,this.player1);
@@ -170,7 +170,7 @@ class Stage_1 extends Phaser.Scene{
         this.switch.setFrictionX(0);
         this.switch.alpha = 0;
 
-        this.switch2 = this.physics.add.sprite(game.config.width-50, game.config.height - 150, 'switch').setScale(1);
+        this.switch2 = this.physics.add.sprite(game.config.width-70, game.config.height - 130, 'switch').setScale(1);
         this.switch2.body.allowGravity = false;
         this.switch2.setImmovable(true);
         this.switch2.setFrictionX(0);
@@ -217,12 +217,10 @@ class Stage_1 extends Phaser.Scene{
         },null,this);
 
         this.physics.add.overlap(this.player1,this.switch2,function(){
-            console.log("overlapswitch");
-            if(keyE.isDown && !this.interact_switch){
-                console.log("switch2istrue");
-                this.interact_switch2 = true;
-                this.sound.play('switch');
-            }
+            console.log("overlapswitch2");
+            console.log("switch2istrue");
+            this.interact_switch2 = true;
+            this.sound.play('switch');
         },null,this);
         
     }
@@ -248,8 +246,11 @@ class Stage_1 extends Phaser.Scene{
         }
 
         if(this.interact_switch2){
-            this.physics.world.removeCollider(p1wall);
-            this.physics.world.removeCollider(p2wall);
+            this.bigwall.visible = false;
+            this.bigwall.setImmovable(false);
+            this.bigwall.body.allowGravity = true;
+            this.bigwall.setVelocityY(-500);
+            this.physics.world.removeCollider(this.bigwall);
         }
 
         if(this.interact_button1 && this.interact_button2){

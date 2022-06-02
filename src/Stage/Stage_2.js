@@ -179,6 +179,7 @@ class Stage_2 extends Phaser.Scene{
             keyA = this.input.keyboard.addKey(65);
             keyD = this.input.keyboard.addKey(68);
             keyW = this.input.keyboard.addKey(87);
+            keyS = this.input.keyboard.addKey(83);
             keyLEFT = this.input.keyboard.addKey(37);
             keyRIGHT = this.input.keyboard.addKey(39);
             keyUP = this.input.keyboard.addKey(38);
@@ -236,6 +237,12 @@ class Stage_2 extends Phaser.Scene{
         // restart scene
         if(this.gameOver){
             this.scene.restart();
+        }
+
+        if(keyS.isDown){
+            this.player1.body.setSize(25,25);
+        }else if (keyS.isUp){
+            this.player1.body.setSize(50,50);
         }
 
         // open the door
