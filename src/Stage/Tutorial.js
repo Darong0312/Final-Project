@@ -18,6 +18,8 @@ class Tutorial extends Phaser.Scene{
         this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
         this.load.image('crabJump', './assets/CrabJump.png');
         this.load.image('hatch', './assets/hatch.png');
+        this.load.image('arrow', './assets/arrow.png');
+        this.load.image('be', './assets/ekey.png');
 
         this.load.audio('switch','./assets/audio/switch.wav');
         this.load.audio('jump', './assets/audio/jump.wav');
@@ -99,6 +101,19 @@ class Tutorial extends Phaser.Scene{
         this.interact_button1 = false;
         this.interact_button2 = false;
         this.interact_switch = false;
+
+        //arrow init
+        this.arrow = this.physics.add.sprite(game.config.width/3 + 200,game.config.height/2 -90, 'arrow').setScale(1);
+        this.arrow.setImmovable(true);
+        this.arrow.body.allowGravity = false;
+
+        this.arrow2 = this.physics.add.sprite(game.config.width-60, game.config.height/2 - 120, 'arrow').setScale(1);
+        this.arrow2.setImmovable(true);
+        this.arrow2.body.allowGravity = false;
+
+        this.be = this.physics.add.sprite(game.config.width-20, game.config.height/2 - 120, 'be').setScale(1);
+        this.be.setImmovable(true);
+        this.be.body.allowGravity = false;
 
         // init interact
         this.switch = this.physics.add.sprite(game.config.width/3 + 200,game.config.height/2 -100, 'switch').setScale(1);
