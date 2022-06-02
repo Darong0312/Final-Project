@@ -5,7 +5,7 @@ class Stage_1 extends Phaser.Scene{
 
     preload(){
         this.load.image('stage1','./assets/backgrounds1.png');
-        this.load.image('man','./assets/human.png');
+        this.load.image('man','./assets/olman.png');
         this.load.image('plat','./assets/ladder.png');
         this.load.image('platup','./assets/platup.png');
         this.load.image('platform', './assets/wood_platform.png');
@@ -14,16 +14,25 @@ class Stage_1 extends Phaser.Scene{
         this.load.image('crab', './assets/Crab.png');
         this.load.image('bigwall', './assets/bigwall.png');
         this.load.image('highwall', './assets/highwall.png');
+        this.load.image('box', './assets/box.png');
         this.load.image('box_fragile', './assets/box_fragile.png');
         this.load.atlas('crab_atlas', './assets/crabbertsheet.png', './assets/crabmap.json');
         this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
+        this.load.atlas('human_atlas', './assets/humansheet.png', './assets/humanmap.json');
 
         this.load.audio('switch','./assets/audio/switch.wav');
+        this.load.audio('jump', './assets/audio/jump.wav');
+        this.load.audio('climb', './assets/audio/climb.wav');
     }
 
     create(){
         //set background
         let bg = this.add.image(game.config.width/2, game.config.height/2,"stage1");
+
+        this.sfxJump = this.sound.add('jump');
+        this.sfxJumpIsPlaying = false;
+        this.sfxClimb = this.sound.add('climb');
+        this.sfxClimbIsPlaying = false;
 
 
         // player 1 Idle right
@@ -104,7 +113,7 @@ class Stage_1 extends Phaser.Scene{
         this.bigwall.setImmovable(true);
         this.bigwall.setFrictionX(0);
 
-        this.highwall = this.physics.add.sprite((game.config.width/3)*2+90, game.config.height - 580,"highwall");
+        this.highwall = this.physics.add.sprite((game.config.width/3)*2+95, game.config.height - 580,"highwall");
         this.highwall.body.allowGravity = false;
         this.highwall.setImmovable(true);
         this.highwall.setFrictionX(0);
@@ -115,18 +124,34 @@ class Stage_1 extends Phaser.Scene{
         this.man.body.allowGravity = false;
         this.physics.add.collider(this.ground, this.man);
 
+        this.anims.create({
+            key: 'man_sweep_left',
+            frames: this.anims.generateFrameNames('human_atlas', {
+                prefix: 'man_sweep_left_',
+                start: 1,
+                end: 3,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 10,
+            repeat: -1,
+            repeatDelay: 300,
+            yoyo: true
+        });
+        this.man.anims.play('man_sweep_left', true);
+
         
         // init players
         this.player1 = new Player1(this,game.config.width/3 - 300, game.config.height - 100, 'monsterA');
         this.physics.add.collider(this.ground,this.player1);
         this.physics.add.collider(this.highwall, this.player1);
-        var p1wall = this.physics.add.collider(this.bigwall, this.player1);
+        this.physics.add.collider(this.bigwall, this.player1);
         this.player1.setCollideWorldBounds(true);
 
-        this.player2 = new Player2(this,game.config.width/3 - 370, game.config.height - 100, 'crab');
+        this.player2 = new Player2(this,game.config.width/3 - 380, game.config.height - 100, 'crab');
         this.physics.add.collider(this.ground, this.player2);
         this.physics.add.collider(this.highwall, this.player2);
-        var p2wall = this.physics.add.collider(this.bigwall, this.player2);
+        this.physics.add.collider(this.bigwall, this.player2);
         this.physics.add.collider(this.plat1, this.player2);
         //this.physics.add.collider(this.plat2, this.player2);
         this.physics.add.collider(this.plat3, this.player2);
@@ -135,10 +160,18 @@ class Stage_1 extends Phaser.Scene{
         this.physics.add.collider(this.platup, this.player2);
         this.player2.setCollideWorldBounds(true);
 
+        this.box = this.physics.add.sprite(game.config.width-120, game.config.height - 50, 'box').setScale(1);
+        this.physics.add.collider(this.box,this.ground);
+        this.physics.add.collider(this.box,this.player2);
+        this.physics.add.collider(this.box,this.player1);
+        this.box.setImmovable(true);
+        this.box.body.allowGravity = false;
+
         // init key
         keyA = this.input.keyboard.addKey(65);
         keyD = this.input.keyboard.addKey(68);
         keyW = this.input.keyboard.addKey(87);
+        keyS = this.input.keyboard.addKey(83);
         keyLEFT = this.input.keyboard.addKey(37);
         keyRIGHT = this.input.keyboard.addKey(39);
         keyUP = this.input.keyboard.addKey(38);
@@ -159,7 +192,7 @@ class Stage_1 extends Phaser.Scene{
         this.switch.setFrictionX(0);
         this.switch.alpha = 0;
 
-        this.switch2 = this.physics.add.sprite(game.config.width-50, game.config.height - 150, 'switch').setScale(1);
+        this.switch2 = this.physics.add.sprite(game.config.width-70, game.config.height - 130, 'switch').setScale(1);
         this.switch2.body.allowGravity = false;
         this.switch2.setImmovable(true);
         this.switch2.setFrictionX(0);
@@ -205,13 +238,11 @@ class Stage_1 extends Phaser.Scene{
             }
         },null,this);
 
-        this.physics.add.overlap(this.player1,this.switch,function(){
-            console.log("overlapswitch");
-            if(keyE.isDown && !this.interact_switch){
-                console.log("switch2istrue");
-                this.interact_switch2 = true;
-                this.sound.play('switch');
-            }
+        this.physics.add.overlap(this.player1,this.switch2,function(){
+            console.log("overlapswitch2");
+            console.log("switch2istrue");
+            this.interact_switch2 = true;
+            this.sound.play('switch');
         },null,this);
         
     }
@@ -224,15 +255,51 @@ class Stage_1 extends Phaser.Scene{
             this.scene.restart();
         }
 
+        //player 2 jump sfx
+        if (this.player2.jump) {
+            if (!this.sfxJumpIsPlaying) {
+                this.sfxJump.play();
+            }
+            this.sfxJump.on('play', () => {
+                this.sfxJumpIsPlaying = true;
+                this.sfxJump.on('complete', () => {
+                    this.sfxJumpIsPlaying = false;
+                });
+            });
+        }
+        //player 1 climb sfx
+        if((keyW.isDown && this.player1.body.blocked.right) || (keyW.isDown && this.player1.body.blocked.left)){
+            if(this.player1.climbTime > 0 ) {
+                if (!this.sfxClimbIsPlaying) {
+                    this.sfxClimb.play();
+                }
+                this.sfxClimb.on('play', () => {
+                    this.sfxClimbIsPlaying = true;
+                    this.sfxClimb.on('complete', () => {
+                        this.sfxClimbIsPlaying = false;
+                    });
+                });
+            }
+        }
+
         if (keyD.isDown || !this.player1.anims.isPlaying) {
             this.player1.anims.play('tenti_idle_right', true);
         } else if (keyA.isDown) {
             this.player1.anims.play('tenti_idle_left', true);
         }
 
+        if(keyS.isDown){
+            this.player1.body.setSize(25,25);
+        }else if (keyS.isUp){
+            this.player1.body.setSize(50,50);
+        }
+
         if(this.interact_switch2){
-            this.physics.world.removeCollider(p1wall);
-            this.physics.world.removeCollider(p2wall);
+            this.bigwall.visible = false;
+            this.bigwall.setImmovable(false);
+            this.bigwall.body.allowGravity = true;
+            this.bigwall.setVelocityY(-500);
+            this.physics.world.removeCollider(this.bigwall);
         }
 
         if(this.interact_button1 && this.interact_button2){

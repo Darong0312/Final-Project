@@ -21,6 +21,8 @@ class Stage_2 extends Phaser.Scene{
         this.load.atlas('human_atlas', './assets/humansheet.png', './assets/humanmap.json');
 
         this.load.audio('switch','./assets/audio/switch.wav');
+        this.load.audio('jump', './assets/audio/jump.wav');
+        this.load.audio('climb', './assets/audio/climb.wav');
     }
 
 
@@ -29,7 +31,12 @@ class Stage_2 extends Phaser.Scene{
             // world bounds
             //this.physics.world.setBounds(0,0,800,600,true,true,true,false);
             //set background
-            let bg = this.add.image(game.config.width/2, game.config.height/2,"back");
+            let bg = this.add.image(game.config.width/2, game.config.height/2,"stage1Bg");
+
+            this.sfxJump = this.sound.add('jump');
+            this.sfxJumpIsPlaying = false;
+            this.sfxClimb = this.sound.add('climb');
+            this.sfxClimbIsPlaying = false;
     
             // init ground and platform
             this.tutorial_bg = this.add.tileSprite(0, 0, 1200, 650, 'stage1Bg').setOrigin(0, 0);
@@ -221,6 +228,7 @@ class Stage_2 extends Phaser.Scene{
             keyA = this.input.keyboard.addKey(65);
             keyD = this.input.keyboard.addKey(68);
             keyW = this.input.keyboard.addKey(87);
+            keyS = this.input.keyboard.addKey(83);
             keyLEFT = this.input.keyboard.addKey(37);
             keyRIGHT = this.input.keyboard.addKey(39);
             keyUP = this.input.keyboard.addKey(38);
@@ -278,6 +286,40 @@ class Stage_2 extends Phaser.Scene{
         // restart scene
         if(this.gameOver){
             this.scene.restart();
+        }
+
+        //player 2 jump sfx
+        if (this.player2.jump) {
+            if (!this.sfxJumpIsPlaying) {
+                this.sfxJump.play();
+            }
+            this.sfxJump.on('play', () => {
+                this.sfxJumpIsPlaying = true;
+                this.sfxJump.on('complete', () => {
+                    this.sfxJumpIsPlaying = false;
+                });
+            });
+        }
+        //player 1 climb sfx
+        if((keyW.isDown && this.player1.body.blocked.right) || (keyW.isDown && this.player1.body.blocked.left)){
+            if(this.player1.climbTime > 0 ) {
+                if (!this.sfxClimbIsPlaying) {
+                    this.sfxClimb.play();
+                }
+                this.sfxClimb.on('play', () => {
+                    this.sfxClimbIsPlaying = true;
+                    this.sfxClimb.on('complete', () => {
+                        this.sfxClimbIsPlaying = false;
+                    });
+                });
+            }
+        }
+
+
+        if(keyS.isDown){
+            this.player1.body.setSize(25,25);
+        }else if (keyS.isUp){
+            this.player1.body.setSize(50,50);
         }
 
         // open the door

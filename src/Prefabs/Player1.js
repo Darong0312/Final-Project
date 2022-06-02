@@ -17,7 +17,7 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
         
         this.timeup = false;
         this.timedEvent = scene.time.addEvent({ 
-            delay: 1000,
+            delay: 2500,
             callback: () => {
                 this.timup = true;
                 this.climbTime--;
