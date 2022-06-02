@@ -16,9 +16,12 @@ class Stage_2 extends Phaser.Scene{
         this.load.image('box', './assets/box.png');
         this.load.image('human','./assets/olman.png');
         this.load.image('stage_2','./assets/stage_2.jpg');
+        this.load.image('door', './assets/door.png');
+        this.load.image('doorop', './assets/OPENDOOR.png');
         this.load.atlas('crab_atlas', './assets/crabbertsheet.png', './assets/crabmap.json');
         this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
         this.load.atlas('human_atlas', './assets/humansheet.png', './assets/humanmap.json');
+
 
         this.load.audio('switch','./assets/audio/switch.wav');
         this.load.audio('jump', './assets/audio/jump.wav');
@@ -39,23 +42,25 @@ class Stage_2 extends Phaser.Scene{
             this.sfxClimbIsPlaying = false;
     
             // init ground and platform
-            this.tutorial_bg = this.add.tileSprite(0, 0, 1200, 650, 'stage1Bg').setOrigin(0, 0);
+            this.tutorial_bg = this.add.tileSprite(0, 0, 2400, 650, 'stage_2').setOrigin(0, 0);
 
+            // set up ground
             this.ground = this.physics.add.sprite(game.config.width/2,game.config.height - 10,'platform');
-            this.ground.displayWidth = 1200;
+            this.ground.displayWidth = 2400;
             this.ground.body.allowGravity = false;
             this.ground.setImmovable(true);
             this.ground.setFrictionX(0);
 
             // init players
-            this.player1 = new Player1(this,game.config.width/3 - 250, game.config.height - 100, 'monsterA');
+            this.player1 = new Player1(this,game.config.width/3 - 250, game.config.height - 100, 'monsterA').setDepth(1);
             this.physics.add.collider(this.ground,this.player1);
             this.player1.setCollideWorldBounds(true);
     
-            this.player2 = new Player2(this,game.config.width/3 - 300, game.config.height -100, 'crab');
+            this.player2 = new Player2(this,game.config.width/3 - 300, game.config.height -100, 'crab').setDepth(1);
             this.physics.add.collider(this.ground, this.player2);
             this.player2.setCollideWorldBounds(true);
     
+
             this.box = this.physics.add.sprite(game.config.width /3 - 100, game.config.height - 60, 'box').setScale(0.5);
             this.physics.add.collider(this.box,this.ground);
             this.physics.add.collider(this.box,this.player2);
@@ -63,40 +68,46 @@ class Stage_2 extends Phaser.Scene{
             this.box.setImmovable(true);
             this.box.body.allowGravity = false;
 
-            this.door = this.physics.add.sprite(game.config.width / 3, game.config.height - 250,"platformY");
+            this.door = this.physics.add.sprite(game.config.width / 3 + 270, game.config.height - 250,"door");
             this.door.displayHeight = 400;
             this.door.body.allowGravity = false;
             this.door.setImmovable(true);
             this.physics.add.collider(this.player2,this.door);
 
-            this.switch = this.physics.add.sprite(game.config.width/ 2 - 100,game.config.height - 50, "switch");
+            this.doorOpen = this.physics.add.sprite(game.config.width / 3 + 300, game.config.height - 250,"doorop").setScale(0.9).setDepth(0);
+            this.doorOpen.body.allowGravity = false;
+            this.doorOpen.displayHeight = 400;
+            this.doorOpen.setImmovable(true);
+            this.doorOpen.visible = false;
+
+            this.switch = this.physics.add.sprite(game.config.width/2 + 340,game.config.height - 250, "switch");
             this.switch.body.allowGravity = false;
             this.switch.setImmovable(true);
 
             // box in box stack: width = 80, height = 80
             // setting the first layer of the box stack
-            this.boxStack1 = this.physics.add.sprite(game.config.width/2 - 20, game.config.height - 60, 'box').setScale(1);
+            this.boxStack1 = this.physics.add.sprite(game.config.width/2 + 300, game.config.height - 60, 'box').setScale(1);
             this.physics.add.collider(this.boxStack1,this.ground);
             this.physics.add.collider(this.boxStack1,this.player2);
             this.physics.add.collider(this.boxStack1,this.player1);
             this.boxStack1.setImmovable(true);
             this.boxStack1.body.allowGravity = false;
 
-            this.boxStack2 = this.physics.add.sprite(game.config.width/2 + 60, game.config.height - 60, 'box').setScale(1);
+            this.boxStack2 = this.physics.add.sprite(game.config.width/2 + 380, game.config.height - 60, 'box').setScale(1);
             this.physics.add.collider(this.boxStack2,this.ground);
             this.physics.add.collider(this.boxStack2,this.player2);
             this.physics.add.collider(this.boxStack2,this.player1);
             this.boxStack2.setImmovable(true);
             this.boxStack2.body.allowGravity = false;
 
-            this.boxStack3 = this.physics.add.sprite(game.config.width/2 + 140, game.config.height - 60, 'box').setScale(1);
+            this.boxStack3 = this.physics.add.sprite(game.config.width/2 + 460, game.config.height - 60, 'box').setScale(1);
             this.physics.add.collider(this.boxStack3,this.ground);
             this.physics.add.collider(this.boxStack3,this.player2);
             this.physics.add.collider(this.boxStack3,this.player1);
             this.boxStack3.setImmovable(true);
             this.boxStack3.body.allowGravity = false;
 
-            this.boxStack3 = this.physics.add.sprite(game.config.width/2 + 220, game.config.height - 60, 'box').setScale(1);
+            this.boxStack3 = this.physics.add.sprite(game.config.width/2 + 540, game.config.height - 60, 'box').setScale(1);
             this.physics.add.collider(this.boxStack3,this.ground);
             this.physics.add.collider(this.boxStack3,this.player2);
             this.physics.add.collider(this.boxStack3,this.player1);
@@ -105,21 +116,21 @@ class Stage_2 extends Phaser.Scene{
             
 
             // setting 2nd layer of the box stack
-            this.boxStack4 = this.physics.add.sprite(game.config.width/2 + 20, game.config.height - 140, 'box').setScale(1);
+            this.boxStack4 = this.physics.add.sprite(game.config.width/2 + 340, game.config.height - 140, 'box').setScale(1);
             this.physics.add.collider(this.boxStack4,this.ground);
             this.physics.add.collider(this.boxStack4,this.player2);
             this.physics.add.collider(this.boxStack4,this.player1);
             this.boxStack4.setImmovable(true);
             this.boxStack4.body.allowGravity = false;
 
-            this.boxStack5 = this.physics.add.sprite(game.config.width/2 + 100, game.config.height - 140, 'box').setScale(1);
+            this.boxStack5 = this.physics.add.sprite(game.config.width/2 + 420, game.config.height - 140, 'box').setScale(1);
             this.physics.add.collider(this.boxStack5,this.ground);
             this.physics.add.collider(this.boxStack5,this.player2);
             this.physics.add.collider(this.boxStack5,this.player1);
             this.boxStack5.setImmovable(true);
             this.boxStack5.body.allowGravity = false;
 
-            this.boxStack6 = this.physics.add.sprite(game.config.width/2 + 180, game.config.height - 140, 'box').setScale(1);
+            this.boxStack6 = this.physics.add.sprite(game.config.width/2 + 500, game.config.height - 140, 'box').setScale(1);
             this.physics.add.collider(this.boxStack6,this.ground);
             this.physics.add.collider(this.boxStack6,this.player2);
             this.physics.add.collider(this.boxStack6,this.player1);
@@ -127,7 +138,7 @@ class Stage_2 extends Phaser.Scene{
             this.boxStack6.body.allowGravity = false;
 
             // 3rd layer of the box stack
-            this.boxStack7 = this.physics.add.sprite(game.config.width/2 + 100, game.config.height - 220, 'box').setScale(1);
+            this.boxStack7 = this.physics.add.sprite(game.config.width/2 + 420, game.config.height - 220, 'box').setScale(1);
             this.physics.add.collider(this.boxStack7,this.ground);
             this.physics.add.collider(this.boxStack7,this.player2);
             this.physics.add.collider(this.boxStack7,this.player1);
@@ -135,15 +146,44 @@ class Stage_2 extends Phaser.Scene{
             this.boxStack7.body.allowGravity = false;
 
             // setting platform
-            this.platform = this.physics.add.sprite(game.config.width - 290, game.config.height -270, 'platform');
+            this.platform = this.physics.add.sprite(game.config.width /2 + 750, game.config.height/2 - 160);
             this.physics.add.collider(this.platform,this.player1);
             this.physics.add.collider(this.platform,this.player2);
             this.platform.setImmovable(true);
             this.platform.body.allowGravity = false;
-            this.platform.displayWidth = 300;
+            this.platform.displayWidth = 280;
+            this.platform.displayHeight = 50;
+
+            // setting ladder for crab
+            this.ladder1 = this.physics.add.sprite(game.config.width /2 + 610, game.config.height - 270, 'platform');
+            this.ladder1.setImmovable(true);
+            this.ladder1.body.allowGravity = false;
+            this.ladder1.displayWidth = 300;
+            this.ladder1.body.checkCollision.down = false;
+
+            this.ladder2 = this.physics.add.sprite(game.config.width /2 + 1100, game.config.height - 270, 'platform');
+            this.ladder2.setImmovable(true);
+            this.ladder2.body.allowGravity = false;
+            this.ladder2.displayWidth = 100;
+            this.ladder2.body.checkCollision.down = false;
+            this.ladder2.body.checkCollision.left = false;
+
+            this.ladder3 = this.physics.add.sprite(game.config.width /2 + 1100, game.config.height - 400, 'platform');
+            this.ladder3.setImmovable(true);
+            this.ladder3.body.allowGravity = false;
+            this.ladder3.displayWidth = 200;
+            this.ladder3.body.checkCollision.down = false;
+            this.ladder3.body.checkCollision.left = false;
+
+            // set camera
+            this.cameras.main.setBounds(0,0,1800,600);
+            this.physics.world.setBounds(0,0,1850,650);
+
+            this.cameras.main.startFollow(this.player1,true,0.05,0.05);
+
 
             // setting sight
-            this.sight = this.physics.add.sprite(game.config.width - 150, game.config.height - 100).setScale(10);
+            this.sight = this.physics.add.sprite(game.config.width/2 + 1000, game.config.height - 100).setScale(11);
             this.physics.add.overlap(this.sight,this.player1,function(){
                 this.gameOver = true;
             },null,this);
@@ -151,10 +191,13 @@ class Stage_2 extends Phaser.Scene{
                 this.gameOver = true;
             },null,this);
             this.sight.setImmovable(true);
+            this.sight.displayWidth = 500;
+            this.sight.displayHeight = 300;
+            
             this.sight.body.allowGravity = false;
 
             // setting human
-            this.human = this.physics.add.sprite(game.config.width - 240, game.config.height - 120, 'human').setScale(1);
+            this.human = this.physics.add.sprite(game.config.width + 100, game.config.height - 110, 'human').setScale(0.9);
             this.physics.add.collider(this.human,this.player1);
             this.physics.add.collider(this.human,this.player2);
             this.human.setImmovable(true);
@@ -217,10 +260,10 @@ class Stage_2 extends Phaser.Scene{
                 repeat: -1,
                 yoyo: true
             });
-            this.human.anims.play('man_sweep_left', true);
+            this.human.anims.play('man_sweep_right', true);
 
             // setting lunch box, need to replace the texture later
-            this.lunch = this.physics.add.sprite(game.config.width - 290, game.config.height -400, 'box').setScale(0.8);
+            this.lunch = this.physics.add.sprite(game.config.width/2 + 650, game.config.height/2 - 400, 'box').setScale(0.8);
             this.box.setImmovable(true);
             this.box.body.allowGravity = false;
 
@@ -255,6 +298,18 @@ class Stage_2 extends Phaser.Scene{
             this.sightBox = this.physics.add.overlap(this.player1,this.switch,function(){
                 this.humanSight = true;
             },null,this);
+
+            // ladder 1
+            this.physics.add.collider(this.player1,this.ladder1);
+            this.physics.add.collider(this.player2,this.ladder1);
+
+            // ladder 2
+            this.physics.add.collider(this.player1,this.ladder2);
+            this.physics.add.collider(this.player2,this.ladder2);
+
+            // ladder 3
+            this.physics.add.collider(this.player1,this.ladder3);
+            this.physics.add.collider(this.player2,this.ladder3);
 
             // lunch box on platform
             this.lunchOnPlatform = this.physics.add.collider(this.platform,this.lunch);
@@ -324,11 +379,12 @@ class Stage_2 extends Phaser.Scene{
 
         // open the door
         if(this.interact_switch){
-            this.door.visible = false;
-            this.door.setImmovable(false);
-            this.door.body.allowGravity = true;
-            this.door.setVelocityY(-500);
-            this.physics.world.removeCollider(this.door);
+            // this.door.visible = false;
+            // this.door.setImmovable(false);
+            // this.door.body.allowGravity = true;
+            // this.door.setVelocityY(-500);
+            this.door.destroy();
+            this.doorOpen.visible = true;
         }
 
         // when the player interact with the lunch box, push it down to the ground
@@ -338,6 +394,7 @@ class Stage_2 extends Phaser.Scene{
 
         // remove sight hit box
         if(this.onGround){
+            this.human.anims.play('man_sweep_left', true);
             this.sight.setVelocityY(500);
         }
     }

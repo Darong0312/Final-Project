@@ -13,9 +13,15 @@ class Stage_1 extends Phaser.Scene{
         this.load.image('monsterA','./assets/monsterA_idle.png');
         this.load.image('crab', './assets/Crab.png');
         this.load.image('bigwall', './assets/bigwall.png');
+        this.load.image('door', './assets/door.png');
+        this.load.image('doorop', './assets/OPENDOOR.png');
         this.load.image('highwall', './assets/highwall.png');
         this.load.image('box', './assets/box.png');
         this.load.image('box_fragile', './assets/box_fragile.png');
+        this.load.image('arrow', './assets/arrow.png');
+        this.load.image('be', './assets/ekey.png');
+        this.load.image('lamp','./assets/Lamp.png');
+        this.load.image('oplamp','./assets/ONLamp.png');
         this.load.atlas('crab_atlas', './assets/crabbertsheet.png', './assets/crabmap.json');
         this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
         this.load.atlas('human_atlas', './assets/humansheet.png', './assets/humanmap.json');
@@ -113,6 +119,11 @@ class Stage_1 extends Phaser.Scene{
         this.bigwall.setImmovable(true);
         this.bigwall.setFrictionX(0);
 
+        this.door = this.physics.add.sprite((game.config.width/3)*2+40, game.config.height - 210,"door");
+        this.door.body.allowGravity = false;
+        this.door.setImmovable(true);
+        this.door.setFrictionX(0);
+
         this.highwall = this.physics.add.sprite((game.config.width/3)*2+95, game.config.height - 580,"highwall");
         this.highwall.body.allowGravity = false;
         this.highwall.setImmovable(true);
@@ -192,11 +203,27 @@ class Stage_1 extends Phaser.Scene{
         this.switch.setFrictionX(0);
         this.switch.alpha = 0;
 
+        this.arrow = this.physics.add.sprite(game.config.width/3 -50, game.config.height - 555, 'arrow').setScale(1);
+        this.arrow.setImmovable(true);
+        this.arrow.body.allowGravity = false;
+        this.arrow.visible = false;
+
+        //init open lamp
+        this.oplamp = this.physics.add.sprite(game.config.width/3 + 130, game.config.height - 355 , 'oplamp').setScale(1);
+        this.oplamp.setImmovable(true);
+        this.oplamp.body.allowGravity = false;
+
+        //init switch2
         this.switch2 = this.physics.add.sprite(game.config.width-70, game.config.height - 130, 'switch').setScale(1);
         this.switch2.body.allowGravity = false;
         this.switch2.setImmovable(true);
         this.switch2.setFrictionX(0);
         this.switch2.alpha = 0;
+
+        this.be = this.physics.add.sprite(game.config.width-110, game.config.height - 160, 'be').setScale(1);
+        this.be.setImmovable(true);
+        this.be.body.allowGravity = false;
+        this.be.visible = false;
 
         this.gameover = false;
 
@@ -240,9 +267,11 @@ class Stage_1 extends Phaser.Scene{
 
         this.physics.add.overlap(this.player1,this.switch2,function(){
             console.log("overlapswitch2");
-            console.log("switch2istrue");
-            this.interact_switch2 = true;
-            this.sound.play('switch');
+            if(keyE.isDown && !this.interact_switch2){
+                console.log("switch2istrue");
+                this.interact_switch2 = true;
+                this.sound.play('switch');
+            }
         },null,this);
         
     }
@@ -253,6 +282,16 @@ class Stage_1 extends Phaser.Scene{
 
         if(this.gameover){
             this.scene.restart();
+        }
+
+        if(this.interact_switch){
+            this.oplamp.visible = false;
+            this.oplamp.setImmovable(false);
+            this.oplamp.body.allowGravity = true;
+            this.oplamp.setVelocityY(-500);
+            this.lamp = this.physics.add.sprite(game.config.width/3 + 130, game.config.height - 500 , 'lamp').setScale(1);
+            this.lamp.setImmovable(true);
+            this.lamp.body.allowGravity = false;
         }
 
         //player 2 jump sfx
@@ -282,12 +321,27 @@ class Stage_1 extends Phaser.Scene{
             }
         }
 
+        if(this.switch.body.touching.none){
+            this.arrow.visible = false;
+        }
+        else{
+            this.arrow.visible = true;
+        }
+
+        if(this.switch2.body.touching.none){
+            this.be.visible = false;
+        }
+        else{
+            this.be.visible = true;
+        }
+
         if (keyD.isDown || !this.player1.anims.isPlaying) {
             this.player1.anims.play('tenti_idle_right', true);
         } else if (keyA.isDown) {
             this.player1.anims.play('tenti_idle_left', true);
         }
 
+        //squash implement
         if(keyS.isDown){
             this.player1.body.setSize(25,25);
         }else if (keyS.isUp){
@@ -300,6 +354,15 @@ class Stage_1 extends Phaser.Scene{
             this.bigwall.body.allowGravity = true;
             this.bigwall.setVelocityY(-500);
             this.physics.world.removeCollider(this.bigwall);
+            this.door.visible = false;
+            this.door.setImmovable(false);
+            this.door.body.allowGravity = true;
+            this.door.setVelocityY(-500);
+            this.physics.world.removeCollider(this.door);
+            this.opdoor = this.physics.add.sprite((game.config.width/3)*2+130, game.config.height - 210,"doorop");
+            this.opdoor.body.allowGravity = false;
+            this.opdoor.setImmovable(true);
+            this.opdoor.setFrictionX(0);
         }
 
         if(this.interact_button1 && this.interact_button2){
