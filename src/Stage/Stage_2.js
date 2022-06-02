@@ -23,6 +23,7 @@ class Stage_2 extends Phaser.Scene{
         this.load.audio('switch','./assets/audio/switch.wav');
         this.load.audio('jump', './assets/audio/jump.wav');
         this.load.audio('climb', './assets/audio/climb.wav');
+        this.load.audio('push','./assets/audio/push.wav');
     }
 
 
@@ -220,9 +221,8 @@ class Stage_2 extends Phaser.Scene{
             this.human.anims.play('man_sweep_left', true);
 
             // setting lunch box, need to replace the texture later
-            this.lunch = this.physics.add.sprite(game.config.width - 290, game.config.height -400, 'box').setScale(0.8);
-            this.box.setImmovable(true);
-            this.box.body.allowGravity = false;
+            this.lunch = this.physics.add.sprite(game.config.width - 290, game.config.height -400, 'box').setScale(0.8).setBounce(0).setCollideWorldBounds(true);
+            this.physics.add.collider(this.lunch, this.player2);
 
             // init key
             keyA = this.input.keyboard.addKey(65);
@@ -282,6 +282,10 @@ class Stage_2 extends Phaser.Scene{
     update(){
         this.player1.update();
         this.player2.update();
+
+        if(this.lunch.body.touching.left){
+            this.sound.play('push');
+        }
 
         // restart scene
         if(this.gameOver){
