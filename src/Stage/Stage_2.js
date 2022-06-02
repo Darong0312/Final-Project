@@ -175,6 +175,48 @@ class Stage_2 extends Phaser.Scene{
                 repeatDelay: 300,
                 yoyo: true
             });
+            // human sweep right
+            this.anims.create({
+                key: 'man_sweep_right',
+                frames: this.anims.generateFrameNames('human_atlas', {
+                    prefix: 'man_sweep_right_',
+                    start: 1,
+                    end: 3,
+                    suffix: '',
+                    zeroPad: 4
+                }),
+                frameRate: 10,
+                repeat: -1,
+                repeatDelay: 300,
+                yoyo: true
+            });
+            // human look back and forth left
+            this.anims.create({
+                key: 'man_look_left',
+                frames: this.anims.generateFrameNames('human_atlas', {
+                    prefix: 'man_look_left_',
+                    start: 1,
+                    end: 5,
+                    suffix: '',
+                    zeroPad: 4
+                }),
+                frameRate: 8,
+                repeat: -1,
+                yoyo: true
+            });
+            this.anims.create({
+                key: 'man_look_right',
+                frames: this.anims.generateFrameNames('human_atlas', {
+                    prefix: 'man_look_right_',
+                    start: 1,
+                    end: 5,
+                    suffix: '',
+                    zeroPad: 4
+                }),
+                frameRate: 8,
+                repeat: -1,
+                yoyo: true
+            });
             this.human.anims.play('man_sweep_left', true);
 
             // setting lunch box, need to replace the texture later
