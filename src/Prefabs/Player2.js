@@ -116,6 +116,8 @@ class Player2 extends Phaser.Physics.Arcade.Sprite{
             frameRate: 8,
             repeat: 0
         });
+
+        this.setSize(50,50);
     }
 
     update(){
@@ -173,6 +175,15 @@ class Player2 extends Phaser.Physics.Arcade.Sprite{
             }
         }
 
+        if(keyDOWN.isDown){
+            if(this.anims.currentAnim.key === 'crab_run_left' || this.anims.currentAnim.key === 'crab_idle_left') {
+                this.anims.play('crab_push_left', true);
+            }
+            else if (this.anims.currentAnim.key === 'crab_run_right' || this.anims.currentAnim.key === 'crab_idle_right') {
+                this.anims.play('crab_push_right', true);
+            }
+        }
+
         if(keyUP.isUp){
             this.jump = false;
         }
@@ -180,10 +191,6 @@ class Player2 extends Phaser.Physics.Arcade.Sprite{
         if(this.body.touching.down){
             this.jumpCount = 1;
         }
-/*
-        if(keyShift.isDown){
-            this.body.setSize(this.width,this.)
-        }
-*/
+
     }
 }
