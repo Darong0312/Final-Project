@@ -362,6 +362,7 @@ class Stage_1 extends Phaser.Scene{
             this.door.body.allowGravity = true;
             this.door.setVelocityY(-500);
             this.physics.world.removeCollider(this.door);
+            this.opdoor.visible = true;
         }
 
         if(this.interact_button1 && this.interact_button2){
