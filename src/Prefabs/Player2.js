@@ -180,7 +180,7 @@ class Player2 extends Phaser.Physics.Arcade.Sprite{
                 this.anims.play('crab_push_left', true);
             }
             else if (this.anims.currentAnim.key === 'crab_run_right' || this.anims.currentAnim.key === 'crab_idle_right') {
-                this.anims.play('crab_puy_right', true);
+                this.anims.play('crab_push_right', true);
             }
         }
 
