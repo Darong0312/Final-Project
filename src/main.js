@@ -6,7 +6,7 @@ let config = {
         default: 'arcade',
         arcade: {
             gravity: { y:600},
-            debug: false
+            debug: true
         }
     },
     scene: [ Menu , Tutorial , Stage_2, Stage_1, Credits, Over]

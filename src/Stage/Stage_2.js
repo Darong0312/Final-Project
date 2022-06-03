@@ -18,6 +18,8 @@ class Stage_2 extends Phaser.Scene{
         this.load.image('stage_2','./assets/stage_2.jpg');
         this.load.image('door', './assets/door.png');
         this.load.image('doorop', './assets/OPENDOOR.png');
+        this.load.image('lunchbox','./assets/lunchbox.png');
+        this.load.image('open_box','./assets/OPENBOX.png');
         this.load.atlas('crab_atlas', './assets/crabbertsheet.png', './assets/crabmap.json');
         this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
         this.load.atlas('human_atlas', './assets/humansheet.png', './assets/humanmap.json');
@@ -77,6 +79,7 @@ class Stage_2 extends Phaser.Scene{
             this.door.displayHeight = 400;
             this.door.body.allowGravity = false;
             this.door.setImmovable(true);
+            this.physics.add.collider(this.player1,this.door);
             this.physics.add.collider(this.player2,this.door);
 
             this.doorOpen = this.physics.add.sprite(game.config.width / 3 + 300, game.config.height - 250,"doorop").setScale(0.9).setDepth(0);
@@ -182,7 +185,7 @@ class Stage_2 extends Phaser.Scene{
 
             // set camera
             this.cameras.main.setBounds(0,0,1800,600);
-            this.physics.world.setBounds(0,0,1850,650);
+            this.physics.world.setBounds(0,0,1850,600);
 
             this.cameras.main.startFollow(this.player1,true,0.05,0.05);
 
@@ -268,7 +271,7 @@ class Stage_2 extends Phaser.Scene{
             this.human.anims.play('man_sweep_right', true);
 
             // setting lunch box, need to replace the texture later
-            this.lunch = this.physics.add.sprite(game.config.width/2 + 650, game.config.height/2 - 400, 'box').setScale(0.8);
+            this.lunch = this.physics.add.sprite(game.config.width/2 + 650, game.config.height/2 - 400, 'lunchbox').setScale(0.8);
             this.box.setImmovable(true);
             this.box.body.allowGravity = false;
 
@@ -290,7 +293,7 @@ class Stage_2 extends Phaser.Scene{
             this.gameOver = false;
             this.push_lunch = false;
             this.onGround = false;
-            
+
             // switch
             this.physics.add.overlap(this.player1,this.switch,function(){
                 if(keyE.isDown && !this.interact_switch){
@@ -323,20 +326,15 @@ class Stage_2 extends Phaser.Scene{
             this.lunchOnGround = this.physics.add.collider(this.ground,this.lunch,function(){
                 this.onGround = true;
             },null,this);
-            
-            // lunch overlap with players
-            this.physics.add.overlap(this.player1,this.lunch,function(){
-                if(keyE.isDown && !this.push_lunch){
-                    this.push_lunch = true;
-                }
-            },null,this);
 
-            // lunch overlap with players
+            // lunch overlap with player
             this.physics.add.overlap(this.player2,this.lunch,function(){
                 if(keyDOWN.isDown && !this.push_lunch){
                     this.push_lunch = true;
                 }
             },null,this);
+
+
     }    
 
     update(){
@@ -376,13 +374,6 @@ class Stage_2 extends Phaser.Scene{
             }
         }
 
-
-        if(keyS.isDown){
-            this.player1.body.setSize(25,25);
-        }else if (keyS.isUp){
-            this.player1.body.setSize(50,50);
-        }
-
         // open the door
         if(this.interact_switch){
             // this.door.visible = false;
@@ -392,10 +383,13 @@ class Stage_2 extends Phaser.Scene{
             this.door.destroy();
             this.doorOpen.visible = true;
         }
-
+ 
         // when the player interact with the lunch box, push it down to the ground
         if(this.push_lunch){
             this.physics.world.removeCollider(this.lunchOnPlatform);
+            if(this.lunch.body.touching.down){
+                this.lunch.setTexture('open_box');
+            }
         }
 
         // remove sight hit box
