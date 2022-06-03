@@ -46,6 +46,36 @@ class Stage_1 extends Phaser.Scene{
         this.sfxClimb = this.sound.add('climb');
         this.sfxClimbIsPlaying = false;
 
+
+        // player 1 Idle right
+        this.anims.create({
+            key: 'tenti_idle_right',
+            frames: this.anims.generateFrameNames('tenti_atlas', {
+                prefix: 'tenti_idle_right_',
+                start: 1,
+                end: 4,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 7,
+            repeat: -1,
+            yoyo: true
+        });
+        // player 1 Idle left
+        this.anims.create({
+            key: 'tenti_idle_left',
+            frames: this.anims.generateFrameNames('tenti_atlas', {
+                prefix: 'tenti_idle_left_',
+                start: 1,
+                end: 4,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 7,
+            repeat: -1,
+            yoyo: true
+        });
+
         // init ground and platform
         this.tutorial_bg = this.add.tileSprite(0, 0, 1200, 650, 'stage1').setOrigin(0, 0);
         this.ground = this.physics.add.sprite(game.config.width/2,game.config.height,'platform');
@@ -113,29 +143,17 @@ class Stage_1 extends Phaser.Scene{
             repeatDelay: 300,
             yoyo: true
         });
-        this.anims.create({
-            key: 'man_look_left',
-            frames: this.anims.generateFrameNames('human_atlas', {
-                prefix: 'man_look_left_',
-                start: 1,
-                end: 3,
-                suffix: '',
-                zeroPad: 4
-            }),
-            frameRate: 6,
-            repeat: -1,
-            yoyo: true
-        });
+        this.man.anims.play('man_sweep_left', true);
 
         
         // init players
-        this.player1 = new Player1(this,game.config.width/3 - 300, game.config.height - 100, 'monsterA');
+        this.player1 = new Player1(this,game.config.width/3 - 300, game.config.height - 100, 'monsterA').setDepth(10);
         this.physics.add.collider(this.ground,this.player1);
         this.physics.add.collider(this.highwall, this.player1);
         this.physics.add.collider(this.bigwall, this.player1);
         this.player1.setCollideWorldBounds(true);
 
-        this.player2 = new Player2(this,game.config.width/3 - 380, game.config.height - 100, 'crab');
+        this.player2 = new Player2(this,game.config.width/3 - 380, game.config.height - 100, 'crab').setDepth(10);
         this.physics.add.collider(this.ground, this.player2);
         this.physics.add.collider(this.highwall, this.player2);
         this.physics.add.collider(this.bigwall, this.player2);
@@ -262,16 +280,11 @@ class Stage_1 extends Phaser.Scene{
                 this.sound.play('switch');
             }
         },null,this);
-        
     }
 
     update(){
         this.player1.update();
         this.player2.update();
-
-        if (!this.man.anims.isPlaying) {
-            this.man.anims.play('man_sweep_left', true);
-        }
 
         if(this.gameover){
             this.bgm1.pause();
@@ -279,14 +292,6 @@ class Stage_1 extends Phaser.Scene{
         }
 
         if(this.interact_switch){
-            this.oplamp.visible = false;
-            this.oplamp.setImmovable(false);
-            this.oplamp.body.allowGravity = true;
-            this.oplamp.setVelocityY(-500);
-            this.lamp = this.physics.add.sprite(game.config.width/3 + 130, game.config.height - 500 , 'lamp').setScale(1);
-            this.lamp.setImmovable(true);
-            this.lamp.body.allowGravity = false;
-            this.man.anims.play('man_look_left', true);
             this.oplamp.destroy();
             this.lamp.visible = true;
         }
@@ -332,11 +337,10 @@ class Stage_1 extends Phaser.Scene{
             this.be.visible = true;
         }
 
-        //squash implement
-        if(keyS.isDown){
-            this.player1.body.setSize(25,25);
-        }else if (keyS.isUp){
-            this.player1.body.setSize(50,50);
+        if (keyD.isDown || !this.player1.anims.isPlaying) {
+            this.player1.anims.play('tenti_idle_right', true);
+        } else if (keyA.isDown) {
+            this.player1.anims.play('tenti_idle_left', true);
         }
 
         if(this.interact_switch2){
