@@ -19,7 +19,7 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
         
         this.timeup = false;
         this.timedEvent = scene.time.addEvent({ 
-            delay: 1000,
+            delay: 2500,
             callback: () => {
                 this.timup = true;
                 this.climbTime--;
@@ -86,32 +86,32 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
             frameRate: 13,
             repeat: -1
         });
-                //player 1 climb left
-                this.anims.create({
-                    key: 'tenti_climb_left',
-                    frames: this.anims.generateFrameNames('tenti_atlas', {
-                        prefix: 'tenti_climb_left_',
-                        start: 1,
-                        end: 8,
-                        suffix: '',
-                        zeroPad: 4
-                    }),
-                    frameRate: 13,
-                    repeat: -1
-                });
-                //player 1 climb right
-                this.anims.create({
-                    key: 'tenti_climb_right',
-                    frames: this.anims.generateFrameNames('tenti_atlas', {
-                        prefix: 'tenti_climb_right_',
-                        start: 1,
-                        end: 8,
-                        suffix: '',
-                        zeroPad: 4
-                    }),
-                    frameRate: 13,
-                    repeat: -1
-                });
+        //player 1 climb left
+        this.anims.create({
+            key: 'tenti_climb_left',
+            frames: this.anims.generateFrameNames('tenti_atlas', {
+                prefix: 'tenti_climb_left_',
+                start: 1,
+                end: 8,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 13,
+            repeat: -1
+            });
+            //player 1 climb right
+        this.anims.create({
+            key: 'tenti_climb_right',
+            frames: this.anims.generateFrameNames('tenti_atlas', {
+                prefix: 'tenti_climb_right_',
+                start: 1,
+                end: 8,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 13,
+            repeat: -1
+            });
         //player 1 squish right
         this.anims.create({
             key: 'tenti_squish_right',
@@ -168,12 +168,12 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
             this.setVelocityX(speed);
             if(!this.form){
                 if (!this.isClimbing) {
-                    this.anims.play('tenti_run_left', true);
+                    this.anims.play('tenti_run_right', true);
                 }
             }
         }
 
-        if(keyW.isDown && this.body.blocked.right && !this.form){
+        if(keyW.isDown && this.body.blocked.right && !this.form && keyD.isDown){
             if( this.climbTime > 0  ){
                 this.allowGravity = false;
                 this.setVelocityY(-100);
@@ -186,7 +186,7 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
             this.isClimbing = false;
         }
 
-        if(keyW.isDown && this.body.blocked.left && !this.form){
+        if(keyW.isDown && this.body.blocked.left && !this.form && keyA.isDown){
             if(this.climbTime > 0 ){
                 this.allowGravity = false;
                 this.setVelocityY(-100);
@@ -209,10 +209,10 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
 
         //squash implement
         if(Phaser.Input.Keyboard.JustDown(keyS)){
-            if(!this.form){
+            if(!this.form && this.body.touching.down){
                 this.form = true;
             }
-            else{
+            else if(this.form){
                 this.x -= 20;
                 this.y -= 20;
                 this.form = false;
@@ -220,7 +220,7 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
         }
 
         // switch form
-        if(this.form){
+        if(this.form ){
             this.setSize(25,25);
         }
         else{

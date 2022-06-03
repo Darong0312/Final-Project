@@ -296,6 +296,7 @@ class Stage_1 extends Phaser.Scene{
                 });
             });
         }
+        
         //player 1 climb sfx
         if((keyW.isDown && this.player1.body.blocked.right) || (keyW.isDown && this.player1.body.blocked.left)){
             if(this.player1.climbTime > 0 ) {
