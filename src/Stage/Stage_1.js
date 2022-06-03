@@ -279,16 +279,13 @@ class Stage_1 extends Phaser.Scene{
         }
 
         if(this.interact_switch){
-            this.oplamp.visible = false;
-            this.oplamp.setImmovable(false);
-            this.oplamp.body.allowGravity = true;
-            this.oplamp.setVelocityY(-500);
-            this.lamp = this.physics.add.sprite(game.config.width/3 + 130, game.config.height - 500 , 'lamp').setScale(1);
-            this.lamp.setImmovable(true);
-            this.lamp.body.allowGravity = false;
-            this.man.anims.play('man_look_left', true);
+            //this.oplamp.visible = false;
+            //this.oplamp.setImmovable(false);
+            //this.oplamp.body.allowGravity = true;
+            //this.oplamp.setVelocityY(-500);
             this.oplamp.destroy();
             this.lamp.visible = true;
+            this.man.anims.play('man_look_left', true);
         }
 
         //player 2 jump sfx
