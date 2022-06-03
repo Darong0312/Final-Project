@@ -90,23 +90,11 @@ class Stage_1 extends Phaser.Scene{
         this.plat1.setImmovable(true);
         this.plat1.setFrictionX(0);
 
-        /*this.plat2 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 160,"plat");
-        this.plat2.body.allowGravity = false;
-        this.plat2.body.checkCollision.down = false;
-        this.plat2.setImmovable(true);
-        this.plat2.setFrictionX(0);*/
-
         this.plat3 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 230,"plat");
         this.plat3.body.allowGravity = false;
         this.plat3.body.checkCollision.down = false;
         this.plat3.setImmovable(true);
         this.plat3.setFrictionX(0);
-
-        /*this.plat4 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 305,"plat");
-        this.plat4.body.allowGravity = false;
-        this.plat4.body.checkCollision.down = false;
-        this.plat4.setImmovable(true);
-        this.plat4.setFrictionX(0);*/
 
         this.plat5 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 360,"plat");
         this.plat5.body.allowGravity = false;
@@ -209,11 +197,10 @@ class Stage_1 extends Phaser.Scene{
         this.switch.setFrictionX(0);
         this.switch.alpha = 0;
 
-        /*this.arrow = this.physics.add.sprite(game.config.width/3 -50, game.config.height - 555, 'arrow').setScale(1);
+        this.arrow = this.physics.add.sprite(game.config.width/3 -50, game.config.height - 555, 'arrow').setScale(1);
         this.arrow.setImmovable(true);
         this.arrow.body.allowGravity = false;
         this.arrow.visible = false;
-        */
 
         //init open lamp
         this.oplamp = this.physics.add.sprite(game.config.width/3 + 130, game.config.height - 355 , 'oplamp').setScale(1);
@@ -227,12 +214,10 @@ class Stage_1 extends Phaser.Scene{
         this.switch2.setFrictionX(0);
         this.switch2.alpha = 0;
 
-        /*
         this.be = this.physics.add.sprite(game.config.width-110, game.config.height - 160, 'be').setScale(1);
         this.be.setImmovable(true);
         this.be.body.allowGravity = false;
         this.be.visible = false;
-        */
 
         this.gameover = false;
 
@@ -331,7 +316,7 @@ class Stage_1 extends Phaser.Scene{
             }
         }
 
-        /*if(this.switch.body.touching.none){
+        if(this.switch.body.touching.none){
             this.arrow.visible = false;
         }
         else{
@@ -343,7 +328,7 @@ class Stage_1 extends Phaser.Scene{
         }
         else{
             this.be.visible = true;
-        }*/
+        }
 
         if (keyD.isDown || !this.player1.anims.isPlaying) {
             this.player1.anims.play('tenti_idle_right', true);
