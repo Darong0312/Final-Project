@@ -171,13 +171,13 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
             if(this.climbTime > 0 ){
                 this.allowGravity = false;
                 this.setVelocityY(-100);
-                this.isClimbing = true;
-                this.anims.play('tenti_climb_right', true);
+                //this.isClimbing = true;
+                //this.anims.play('tenti_climb_right', true);
             }
         }
         else{
             this.body.allowGravity = true;
-            this.isClimbing = false;
+            //this.isClimbing = false;
         }
 
         if(keyW.isDown && this.body.blocked.left){
@@ -185,12 +185,12 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
                 this.allowGravity = false;
                 this.setVelocityY(-100);
                 this.isClimbing = true;
-                this.anims.play('tenti_climb_left', true);
+                //this.anims.play('tenti_climb_left', true);
             }
         }
         else{
             this.body.allowGravity = true;
-            this.isClimbing = false;
+            //this.isClimbing = false;
         }
 
         if(this.body.touching.down){
