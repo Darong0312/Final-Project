@@ -20,6 +20,7 @@ class Stage_2 extends Phaser.Scene{
         this.load.image('doorop', './assets/OPENDOOR.png');
         this.load.image('lunchbox','./assets/lunchbox.png');
         this.load.image('open_box','./assets/OPENBOX.png');
+        this.load.image('exit','./assets/gray_plat.png');
         this.load.atlas('crab_atlas', './assets/crabbertsheet.png', './assets/crabmap.json');
         this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
         this.load.atlas('human_atlas', './assets/humansheet.png', './assets/humanmap.json');
@@ -211,6 +212,11 @@ class Stage_2 extends Phaser.Scene{
             this.human.setImmovable(true);
             this.human.body.allowGravity = false;
 
+            // exit
+            this.exit = this.physics.add.sprite(game.config.width + 500, game.config.height - 20, 'exit').setScale(0.9);
+            this.exit.setImmovable(true);
+            this.exit.body.allowGravity = false;
+
             // human sweep left
             this.anims.create({
                 key: 'man_sweep_left',
@@ -293,6 +299,7 @@ class Stage_2 extends Phaser.Scene{
             this.gameOver = false;
             this.push_lunch = false;
             this.onGround = false;
+            this.win = false;
 
             // switch
             this.physics.add.overlap(this.player1,this.switch,function(){
@@ -333,7 +340,13 @@ class Stage_2 extends Phaser.Scene{
                     this.push_lunch = true;
                 }
             },null,this);
-
+ 
+            // exit overlap
+            this.physics.add.overlap(this.player2,this.exit,function(){
+                if(keyDOWN.isDown && !this.win){
+                    this.win = true;
+                }
+            },null,this);
 
     }    
 
@@ -396,6 +409,10 @@ class Stage_2 extends Phaser.Scene{
         if(this.onGround){
             this.human.anims.play('man_sweep_left', true);
             this.sight.setVelocityY(500);
+        }
+
+        if(this.win){
+            this.scene.start("win");
         }
     }
 
