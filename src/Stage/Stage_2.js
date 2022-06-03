@@ -26,6 +26,7 @@ class Stage_2 extends Phaser.Scene{
         this.load.audio('switch','./assets/audio/switch.wav');
         this.load.audio('jump', './assets/audio/jump.wav');
         this.load.audio('climb', './assets/audio/climb.wav');
+        this.load.audio('bgm2', './assets/audio/level2theme.wav');
     }
 
 
@@ -35,6 +36,11 @@ class Stage_2 extends Phaser.Scene{
             //this.physics.world.setBounds(0,0,800,600,true,true,true,false);
             //set background
             let bg = this.add.image(game.config.width/2, game.config.height/2,"stage1Bg");
+
+            this.bgm2 = this.sound.add('bgm2');
+            this.bgm2.setVolume(0.3);
+            this.bgm2.loop = true;
+            this.bgm2.play();
 
             this.sfxJump = this.sound.add('jump');
             this.sfxJumpIsPlaying = false;
@@ -59,7 +65,6 @@ class Stage_2 extends Phaser.Scene{
             this.player2 = new Player2(this,game.config.width/3 - 300, game.config.height -100, 'crab').setDepth(1);
             this.physics.add.collider(this.ground, this.player2);
             this.player2.setCollideWorldBounds(true);
-    
 
             this.box = this.physics.add.sprite(game.config.width /3 - 100, game.config.height - 60, 'box').setScale(0.5);
             this.physics.add.collider(this.box,this.ground);
@@ -340,7 +345,8 @@ class Stage_2 extends Phaser.Scene{
 
         // restart scene
         if(this.gameOver){
-            this.scene.restart();
+            this.bgm2.pause();
+            this.scene.start("gameOver");
         }
 
         //player 2 jump sfx

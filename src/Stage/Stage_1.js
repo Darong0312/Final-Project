@@ -29,11 +29,17 @@ class Stage_1 extends Phaser.Scene{
         this.load.audio('switch','./assets/audio/switch.wav');
         this.load.audio('jump', './assets/audio/jump.wav');
         this.load.audio('climb', './assets/audio/climb.wav');
+        this.load.audio('bgm1', './assets/audio/Level1theme.wav');
     }
 
     create(){
         //set background
         let bg = this.add.image(game.config.width/2, game.config.height/2,"stage1");
+
+        this.bgm1 = this.sound.add('bgm1');
+        this.bgm1.setVolume(0.3);
+        this.bgm1.loop = true;
+        this.bgm1.play();
 
         this.sfxJump = this.sound.add('jump');
         this.sfxJumpIsPlaying = false;
@@ -54,23 +60,11 @@ class Stage_1 extends Phaser.Scene{
         this.plat1.setImmovable(true);
         this.plat1.setFrictionX(0);
 
-        /*this.plat2 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 160,"plat");
-        this.plat2.body.allowGravity = false;
-        this.plat2.body.checkCollision.down = false;
-        this.plat2.setImmovable(true);
-        this.plat2.setFrictionX(0);*/
-
         this.plat3 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 230,"plat");
         this.plat3.body.allowGravity = false;
         this.plat3.body.checkCollision.down = false;
         this.plat3.setImmovable(true);
         this.plat3.setFrictionX(0);
-
-        /*this.plat4 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 305,"plat");
-        this.plat4.body.allowGravity = false;
-        this.plat4.body.checkCollision.down = false;
-        this.plat4.setImmovable(true);
-        this.plat4.setFrictionX(0);*/
 
         this.plat5 = this.physics.add.sprite(game.config.width/3 - 115, game.config.height - 360,"plat");
         this.plat5.body.allowGravity = false;
@@ -207,18 +201,31 @@ class Stage_1 extends Phaser.Scene{
         this.be.body.allowGravity = false;
         this.be.visible = false;
 
+        // open door
+        this.opdoor = this.physics.add.sprite((game.config.width/3)*2+130, game.config.height - 210,"doorop");
+        this.opdoor.body.allowGravity = false;
+        this.opdoor.visible = false;
+        this.opdoor.setImmovable(true);
+        this.opdoor.setFrictionX(0);
+
+        // lamp
+        this.lamp = this.physics.add.sprite(game.config.width/3 + 130, game.config.height - 500 , 'lamp').setScale(1);
+        this.lamp.setImmovable(true);
+        this.lamp.body.allowGravity = false;
+        this.lamp.visible = false;
+
         this.gameover = false;
 
         this.physics.add.overlap(this.player1, this.man, function(){
             if(!this.interact_switch){
-                console.log("player1overlap");
+                // console.log("player1overlap");
                 this.gameover = true;
             }
         },null,this);
 
         this.physics.add.overlap(this.player2, this.man, function(){
             if(!this.interact_switch){
-                console.log("player2overlap");
+                // console.log("player2overlap");
                 this.gameover = true;
             }
         },null,this);
@@ -228,29 +235,29 @@ class Stage_1 extends Phaser.Scene{
         this.player1_button = this.physics.add.overlap(this.player1,this.button,function(){
             if(keyE.isDown){
                 this.interact_button1 = true;
-                console.log(this.interact_button1);
+                // console.log(this.interact_button1);
             }
         },null,this);
         this.player2_button = this.physics.add.overlap(this.player2,this.button,function(){
             if(keyDOWN.isDown){
                 this.interact_button2 = true;
-                console.log(this.interact_button2);
+                // console.log(this.interact_button2);
             }
         },null,this);
 
         this.physics.add.overlap(this.player2,this.switch,function(){
-            console.log("overlapswitch");
+            // console.log("overlapswitch");
             if(keyDOWN.isDown && !this.interact_switch){
-                console.log("switchistrue");
+                // console.log("switchistrue");
                 this.interact_switch = true;
                 this.sound.play('switch');
             }
         },null,this);
 
         this.physics.add.overlap(this.player1,this.switch2,function(){
-            console.log("overlapswitch2");
+            // console.log("overlapswitch2");
             if(keyE.isDown && !this.interact_switch2){
-                console.log("switch2istrue");
+                // console.log("switch2istrue");
                 this.interact_switch2 = true;
                 this.sound.play('switch');
             }
@@ -267,7 +274,8 @@ class Stage_1 extends Phaser.Scene{
         }
 
         if(this.gameover){
-            this.scene.restart();
+            this.bgm1.pause();
+            this.scene.start("gameOver");
         }
 
         if(this.interact_switch){
@@ -279,6 +287,8 @@ class Stage_1 extends Phaser.Scene{
             this.lamp.setImmovable(true);
             this.lamp.body.allowGravity = false;
             this.man.anims.play('man_look_left', true);
+            this.oplamp.destroy();
+            this.lamp.visible = true;
         }
 
         //player 2 jump sfx
@@ -340,15 +350,13 @@ class Stage_1 extends Phaser.Scene{
             this.door.body.allowGravity = true;
             this.door.setVelocityY(-500);
             this.physics.world.removeCollider(this.door);
-            this.opdoor = this.physics.add.sprite((game.config.width/3)*2+130, game.config.height - 210,"doorop");
-            this.opdoor.body.allowGravity = false;
-            this.opdoor.setImmovable(true);
-            this.opdoor.setFrictionX(0);
+            this.opdoor.visible = true;
         }
 
         if(this.interact_button1 && this.interact_button2){
+            this.bgm1.pause();
             this.scene.start("stageTwo");
-            console.log("enter stage 2");
+            // console.log("enter stage 2");
         }
     }
 }
