@@ -21,6 +21,8 @@ class Stage_2 extends Phaser.Scene{
         this.load.image('lunchbox','./assets/lunchbox.png');
         this.load.image('open_box','./assets/OPENBOX.png');
         this.load.image('exit','./assets/gray_plat.png');
+        this.load.image('down', './assets/arrow.png');
+        this.load.image('E_Key', './assets/ekey.png');
         this.load.atlas('crab_atlas', './assets/crabbertsheet.png', './assets/crabmap.json');
         this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
         this.load.atlas('human_atlas', './assets/humansheet.png', './assets/humanmap.json');
@@ -68,13 +70,6 @@ class Stage_2 extends Phaser.Scene{
             this.player2 = new Player2(this,game.config.width/3 - 300, game.config.height -100, 'crab').setDepth(1);
             this.physics.add.collider(this.ground, this.player2);
             this.player2.setCollideWorldBounds(true);
-
-            this.box = this.physics.add.sprite(game.config.width /3 - 100, game.config.height - 60, 'box').setScale(0.5);
-            this.physics.add.collider(this.box,this.ground);
-            this.physics.add.collider(this.box,this.player2);
-            this.physics.add.collider(this.box,this.player1);
-            this.box.setImmovable(true);
-            this.box.body.allowGravity = false;
 
             this.door = this.physics.add.sprite(game.config.width / 3 + 270, game.config.height - 250,"door");
             this.door.displayHeight = 400;
@@ -163,6 +158,12 @@ class Stage_2 extends Phaser.Scene{
             this.platform.displayWidth = 280;
             this.platform.displayHeight = 50;
 
+            // set door switch instruction box
+            this.switch_box = this.physics.add.sprite(game.config.width/2 + 340,game.config.height - 300, 'E_Key');
+            this.switch_box.setImmovable(true);
+            this.switch_box.visible = false;
+            this.switch_box.body.allowGravity = false;
+                        
             // setting ladder for crab
             this.ladder1 = this.physics.add.sprite(game.config.width /2 + 610, game.config.height - 270, 'platform');
             this.ladder1.setImmovable(true);
@@ -216,6 +217,12 @@ class Stage_2 extends Phaser.Scene{
             this.exit = this.physics.add.sprite(game.config.width + 500, game.config.height - 20, 'exit').setScale(0.9);
             this.exit.setImmovable(true);
             this.exit.body.allowGravity = false;
+
+            // exit box
+            this.exit_box = this.physics.add.sprite(game.config.width + 500, game.config.height - 60, 'down');
+            this.exit_box.setImmovable(true);
+            this.exit_box.body.allowGravity = false;
+            this.exit_box.visible = false;
 
             // human sweep left
             this.anims.create({
@@ -278,8 +285,6 @@ class Stage_2 extends Phaser.Scene{
 
             // setting lunch box, need to replace the texture later
             this.lunch = this.physics.add.sprite(game.config.width/2 + 650, game.config.height/2 - 400, 'lunchbox').setScale(0.8);
-            this.box.setImmovable(true);
-            this.box.body.allowGravity = false;
 
             // init key
             keyA = this.input.keyboard.addKey(65);
@@ -360,6 +365,13 @@ class Stage_2 extends Phaser.Scene{
             this.scene.start("gameOver");
         }
 
+        if(this.switch.body.touching.none){
+            this.switch_box.visible = false;
+        }
+        else{
+            this.switch_box.visible = true;
+        }
+
         //player 2 jump sfx
         if (this.player2.jump) {
             if (!this.sfxJumpIsPlaying) {
@@ -408,7 +420,8 @@ class Stage_2 extends Phaser.Scene{
         // remove sight hit box
         if(this.onGround){
             this.human.anims.play('man_sweep_left', true);
-            this.sight.setVelocityY(500);
+            this.sight.destroy();
+            this.exit_box.visible = true;
         }
 
         if(this.win){
