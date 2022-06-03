@@ -65,7 +65,6 @@ class Stage_2 extends Phaser.Scene{
             this.player2 = new Player2(this,game.config.width/3 - 300, game.config.height -100, 'crab').setDepth(1);
             this.physics.add.collider(this.ground, this.player2);
             this.player2.setCollideWorldBounds(true);
-    
 
             this.box = this.physics.add.sprite(game.config.width /3 - 100, game.config.height - 60, 'box').setScale(0.5);
             this.physics.add.collider(this.box,this.ground);

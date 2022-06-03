@@ -219,18 +219,31 @@ class Stage_1 extends Phaser.Scene{
         this.be.body.allowGravity = false;
         this.be.visible = false;
 
+        // open door
+        this.opdoor = this.physics.add.sprite((game.config.width/3)*2+130, game.config.height - 210,"doorop");
+        this.opdoor.body.allowGravity = false;
+        this.opdoor.visible = false;
+        this.opdoor.setImmovable(true);
+        this.opdoor.setFrictionX(0);
+
+        // lamp
+        this.lamp = this.physics.add.sprite(game.config.width/3 + 130, game.config.height - 500 , 'lamp').setScale(1);
+        this.lamp.setImmovable(true);
+        this.lamp.body.allowGravity = false;
+        this.lamp.visible = false;
+
         this.gameover = false;
 
         this.physics.add.overlap(this.player1, this.man, function(){
             if(!this.interact_switch){
-                console.log("player1overlap");
+                // console.log("player1overlap");
                 this.gameover = true;
             }
         },null,this);
 
         this.physics.add.overlap(this.player2, this.man, function(){
             if(!this.interact_switch){
-                console.log("player2overlap");
+                // console.log("player2overlap");
                 this.gameover = true;
             }
         },null,this);
@@ -240,29 +253,29 @@ class Stage_1 extends Phaser.Scene{
         this.player1_button = this.physics.add.overlap(this.player1,this.button,function(){
             if(keyE.isDown){
                 this.interact_button1 = true;
-                console.log(this.interact_button1);
+                // console.log(this.interact_button1);
             }
         },null,this);
         this.player2_button = this.physics.add.overlap(this.player2,this.button,function(){
             if(keyDOWN.isDown){
                 this.interact_button2 = true;
-                console.log(this.interact_button2);
+                // console.log(this.interact_button2);
             }
         },null,this);
 
         this.physics.add.overlap(this.player2,this.switch,function(){
-            console.log("overlapswitch");
+            // console.log("overlapswitch");
             if(keyDOWN.isDown && !this.interact_switch){
-                console.log("switchistrue");
+                // console.log("switchistrue");
                 this.interact_switch = true;
                 this.sound.play('switch');
             }
         },null,this);
 
         this.physics.add.overlap(this.player1,this.switch2,function(){
-            console.log("overlapswitch2");
+            // console.log("overlapswitch2");
             if(keyE.isDown && !this.interact_switch2){
-                console.log("switch2istrue");
+                // console.log("switch2istrue");
                 this.interact_switch2 = true;
                 this.sound.play('switch');
             }
@@ -280,13 +293,8 @@ class Stage_1 extends Phaser.Scene{
         }
 
         if(this.interact_switch){
-            this.oplamp.visible = false;
-            this.oplamp.setImmovable(false);
-            this.oplamp.body.allowGravity = true;
-            this.oplamp.setVelocityY(-500);
-            this.lamp = this.physics.add.sprite(game.config.width/3 + 130, game.config.height - 500 , 'lamp').setScale(1);
-            this.lamp.setImmovable(true);
-            this.lamp.body.allowGravity = false;
+            this.oplamp.destroy();
+            this.lamp.visible = true;
         }
 
         //player 2 jump sfx
@@ -354,16 +362,12 @@ class Stage_1 extends Phaser.Scene{
             this.door.body.allowGravity = true;
             this.door.setVelocityY(-500);
             this.physics.world.removeCollider(this.door);
-            this.opdoor = this.physics.add.sprite((game.config.width/3)*2+130, game.config.height - 210,"doorop");
-            this.opdoor.body.allowGravity = false;
-            this.opdoor.setImmovable(true);
-            this.opdoor.setFrictionX(0);
         }
 
         if(this.interact_button1 && this.interact_button2){
             this.bgm1.pause();
             this.scene.start("stageTwo");
-            console.log("enter stage 2");
+            // console.log("enter stage 2");
         }
     }
 }
