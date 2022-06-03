@@ -29,11 +29,17 @@ class Stage_1 extends Phaser.Scene{
         this.load.audio('switch','./assets/audio/switch.wav');
         this.load.audio('jump', './assets/audio/jump.wav');
         this.load.audio('climb', './assets/audio/climb.wav');
+        this.load.audio('bgm1', './assets/audio/Level1theme.wav');
     }
 
     create(){
         //set background
         let bg = this.add.image(game.config.width/2, game.config.height/2,"stage1");
+
+        this.bgm1 = this.sound.add('bgm1');
+        this.bgm1.setVolume(0.3);
+        this.bgm1.loop = true;
+        this.bgm1.play();
 
         this.sfxJump = this.sound.add('jump');
         this.sfxJumpIsPlaying = false;
@@ -281,7 +287,8 @@ class Stage_1 extends Phaser.Scene{
         this.player2.update();
 
         if(this.gameover){
-            this.scene.restart();
+            this.bgm1.pause();
+            this.scene.start("gameOver");
         }
 
         if(this.interact_switch){
@@ -366,6 +373,7 @@ class Stage_1 extends Phaser.Scene{
         }
 
         if(this.interact_button1 && this.interact_button2){
+            this.bgm1.pause();
             this.scene.start("stageTwo");
             console.log("enter stage 2");
         }

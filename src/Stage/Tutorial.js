@@ -24,6 +24,7 @@ class Tutorial extends Phaser.Scene{
         this.load.audio('switch','./assets/audio/switch.wav');
         this.load.audio('jump', './assets/audio/jump.wav');
         this.load.audio('climb', './assets/audio/climb.wav');
+        this.load.audio('bgm', './assets/audio/TutorialTheme.wav');
     }
 
     create(){
@@ -31,6 +32,11 @@ class Tutorial extends Phaser.Scene{
         //this.physics.world.setBounds(0,0,800,600,true,true,true,false);
         //set background
         let bg = this.add.image(game.config.width/2, game.config.height/2,"back");
+
+        this.bgm = this.sound.add('bgm');
+        this.bgm.setVolume(0.3);
+        this.bgm.loop = true;
+        this.bgm.play();
 
         //stuff so sound only repeats after completely playing once
         this.sfxJump = this.sound.add('jump');
@@ -237,6 +243,7 @@ class Tutorial extends Phaser.Scene{
         }
 
         if(this.interact_button1 && this.interact_button2){
+            this.bgm.pause();
             this.scene.start("stageOne");
         }
 
