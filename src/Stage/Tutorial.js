@@ -34,6 +34,7 @@ class Tutorial extends Phaser.Scene{
 
         //stuff so sound only repeats after completely playing once
         this.sfxJump = this.sound.add('jump');
+        this.sfxJumpComplete = false;
         this.sfxJumpIsPlaying = false;
         this.sfxClimb = this.sound.add('climb');
         this.sfxClimbIsPlaying = false;
@@ -185,6 +186,10 @@ class Tutorial extends Phaser.Scene{
         this.player2.update();
 
         //player 2 jump sfx
+        if (this.sfxJumpComplete && keyUP.isUp) {
+            this.sfxJumpIsPlaying = false;
+            this.sfxJumpComplete = false;
+        }
         if (this.player2.jump) {
             if (!this.sfxJumpIsPlaying) {
                 this.sfxJump.play();
@@ -192,7 +197,7 @@ class Tutorial extends Phaser.Scene{
             this.sfxJump.on('play', () => {
                 this.sfxJumpIsPlaying = true;
                 this.sfxJump.on('complete', () => {
-                    this.sfxJumpIsPlaying = false;
+                    this.sfxJumpComplete = true;
                 });
             });
         }

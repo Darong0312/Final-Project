@@ -40,36 +40,6 @@ class Stage_1 extends Phaser.Scene{
         this.sfxClimb = this.sound.add('climb');
         this.sfxClimbIsPlaying = false;
 
-
-        // player 1 Idle right
-        this.anims.create({
-            key: 'tenti_idle_right',
-            frames: this.anims.generateFrameNames('tenti_atlas', {
-                prefix: 'tenti_idle_right_',
-                start: 1,
-                end: 4,
-                suffix: '',
-                zeroPad: 4
-            }),
-            frameRate: 7,
-            repeat: -1,
-            yoyo: true
-        });
-        // player 1 Idle left
-        this.anims.create({
-            key: 'tenti_idle_left',
-            frames: this.anims.generateFrameNames('tenti_atlas', {
-                prefix: 'tenti_idle_left_',
-                start: 1,
-                end: 4,
-                suffix: '',
-                zeroPad: 4
-            }),
-            frameRate: 7,
-            repeat: -1,
-            yoyo: true
-        });
-
         // init ground and platform
         this.tutorial_bg = this.add.tileSprite(0, 0, 1200, 650, 'stage1').setOrigin(0, 0);
         this.ground = this.physics.add.sprite(game.config.width/2,game.config.height,'platform');
@@ -149,7 +119,19 @@ class Stage_1 extends Phaser.Scene{
             repeatDelay: 300,
             yoyo: true
         });
-        this.man.anims.play('man_sweep_left', true);
+        this.anims.create({
+            key: 'man_look_left',
+            frames: this.anims.generateFrameNames('human_atlas', {
+                prefix: 'man_look_left_',
+                start: 1,
+                end: 3,
+                suffix: '',
+                zeroPad: 4
+            }),
+            frameRate: 6,
+            repeat: -1,
+            yoyo: true
+        });
 
         
         // init players
@@ -280,6 +262,10 @@ class Stage_1 extends Phaser.Scene{
         this.player1.update();
         this.player2.update();
 
+        if (!this.man.anims.isPlaying) {
+            this.man.anims.play('man_sweep_left', true);
+        }
+
         if(this.gameover){
             this.scene.restart();
         }
@@ -292,6 +278,7 @@ class Stage_1 extends Phaser.Scene{
             this.lamp = this.physics.add.sprite(game.config.width/3 + 130, game.config.height - 500 , 'lamp').setScale(1);
             this.lamp.setImmovable(true);
             this.lamp.body.allowGravity = false;
+            this.man.anims.play('man_look_left', true);
         }
 
         //player 2 jump sfx
@@ -333,12 +320,6 @@ class Stage_1 extends Phaser.Scene{
         }
         else{
             this.be.visible = true;
-        }
-
-        if (keyD.isDown || !this.player1.anims.isPlaying) {
-            this.player1.anims.play('tenti_idle_right', true);
-        } else if (keyA.isDown) {
-            this.player1.anims.play('tenti_idle_left', true);
         }
 
         //squash implement

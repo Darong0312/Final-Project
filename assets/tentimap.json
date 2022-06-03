@@ -679,6 +679,326 @@
                 "w": 67,
                 "h": 32
             }
+        },
+        "tenti_climb_right_0008": {
+            "frame": {
+                "x": 436,
+                "y": 366,
+                "w": 59,
+                "h": 74
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 59,
+                "h": 74
+            },
+            "sourceSize": {
+                "w": 59,
+                "h": 74
+            }
+        },
+        "tenti_climb_right_0007": {
+            "frame": {
+                "x": 375,
+                "y": 367,
+                "w": 60,
+                "h": 74
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 60,
+                "h": 74
+            },
+            "sourceSize": {
+                "w": 60,
+                "h": 74
+            }
+        },
+        "tenti_climb_right_0004": {
+            "frame": {
+                "x": 191,
+                "y": 368,
+                "w": 60,
+                "h": 74
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 60,
+                "h": 74
+            },
+            "sourceSize": {
+                "w": 60,
+                "h": 74
+            }
+        },
+        "tenti_climb_right_0001": {
+            "frame": {
+                "x": 3,
+                "y": 369,
+                "w": 61,
+                "h": 67
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 61,
+                "h": 67
+            },
+            "sourceSize": {
+                "w": 61,
+                "h": 67
+            }
+        },
+        "tenti_climb_right_0002": {
+            "frame": {
+                "x": 65,
+                "y": 369,
+                "w": 60,
+                "h": 73
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 60,
+                "h": 73
+            },
+            "sourceSize": {
+                "w": 60,
+                "h": 73
+            }
+        },
+        "tenti_climb_right_0003": {
+            "frame": {
+                "x": 127,
+                "y": 369,
+                "w": 61,
+                "h": 74
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 61,
+                "h": 74
+            },
+            "sourceSize": {
+                "w": 61,
+                "h": 74
+            }
+        },
+        "tenti_climb_right_0005": {
+            "frame": {
+                "x": 252,
+                "y": 369,
+                "w": 61,
+                "h": 73
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 61,
+                "h": 73
+            },
+            "sourceSize": {
+                "w": 61,
+                "h": 73
+            }
+        },
+        "tenti_climb_right_0006": {
+            "frame": {
+                "x": 315,
+                "y": 370,
+                "w": 58,
+                "h": 72
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 58,
+                "h": 72
+            },
+            "sourceSize": {
+                "w": 58,
+                "h": 72
+            }
+        },
+        "tenti_climb_left_0001": {
+            "frame": {
+                "x": 2,
+                "y": 442,
+                "w": 60,
+                "h": 67
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 60,
+                "h": 67
+            },
+            "sourceSize": {
+                "w": 60,
+                "h": 67
+            }
+        },
+        "tenti_climb_left_0004": {
+            "frame": {
+                "x": 187,
+                "y": 444,
+                "w": 60,
+                "h": 74
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 60,
+                "h": 74
+            },
+            "sourceSize": {
+                "w": 60,
+                "h": 74
+            }
+        },
+        "tenti_climb_left_0002": {
+            "frame": {
+                "x": 64,
+                "y": 445,
+                "w": 59,
+                "h": 73
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 59,
+                "h": 73
+            },
+            "sourceSize": {
+                "w": 59,
+                "h": 73
+            }
+        },
+        "tenti_climb_left_0003": {
+            "frame": {
+                "x": 125,
+                "y": 445,
+                "w": 60,
+                "h": 74
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 60,
+                "h": 74
+            },
+            "sourceSize": {
+                "w": 60,
+                "h": 74
+            }
+        },
+        "tenti_climb_left_0005": {
+            "frame": {
+                "x": 249,
+                "y": 445,
+                "w": 60,
+                "h": 75
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 60,
+                "h": 75
+            },
+            "sourceSize": {
+                "w": 60,
+                "h": 75
+            }
+        },
+        "tenti_climb_left_0007": {
+            "frame": {
+                "x": 372,
+                "y": 445,
+                "w": 60,
+                "h": 74
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 60,
+                "h": 74
+            },
+            "sourceSize": {
+                "w": 60,
+                "h": 74
+            }
+        },
+        "tenti_climb_left_0006": {
+            "frame": {
+                "x": 312,
+                "y": 447,
+                "w": 58,
+                "h": 72
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 58,
+                "h": 72
+            },
+            "sourceSize": {
+                "w": 58,
+                "h": 72
+            }
+        },
+        "tenti_climb_left_0008": {
+            "frame": {
+                "x": 435,
+                "y": 447,
+                "w": 61,
+                "h": 73
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 61,
+                "h": 73
+            },
+            "sourceSize": {
+                "w": 61,
+                "h": 73
+            }
         }
     },
     "meta": {
@@ -687,7 +1007,7 @@
         "image": "spritesheet.png",
         "size": {
             "w": 598,
-            "h": 369
+            "h": 520
         },
         "scale": 1
     }
