@@ -1,21 +1,21 @@
-class Win extends Phaser.Scene {
+class Poststage2 extends Phaser.Scene {
     constructor() {
-        super("win");
+        super("Poststage2");
     }
 
     preload(){
-        this.load.image('win','./assets/win.png');
+        this.load.image('poststage2','./assets/poststage2.png');
     }
     create() {
         // show menu image
-        this.add.image(game.config.width/2, game.config.height/2,'win');
+        this.add.image(game.config.width/2, game.config.height/2,'poststage2');
         // define keys
         keySpace = this.input.keyboard.addKey(32);
     }
 
     update(){
         if(Phaser.Input.Keyboard.JustDown(keySpace)){
-            this.scene.start("creditScene");
+            this.scene.start("stageTwo");
         }
     }
 }

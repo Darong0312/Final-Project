@@ -342,7 +342,7 @@ class Stage_1 extends Phaser.Scene{
 
         if(this.interact_button1 && this.interact_button2){
             this.bgm1.pause();
-            this.scene.start("stageTwo");
+            this.scene.start("Poststage2");
             // console.log("enter stage 2");
         }
     }
