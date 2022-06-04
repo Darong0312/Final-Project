@@ -22,6 +22,7 @@ class Stage_1 extends Phaser.Scene{
         this.load.image('be', './assets/ekey.png');
         this.load.image('lamp','./assets/Lamp.png');
         this.load.image('oplamp','./assets/ONLamp.png');
+        this.load.image('exitsign', './assets/exitsign.png');
         this.load.atlas('crab_atlas', './assets/crabbertsheet.png', './assets/crabmap.json');
         this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
         this.load.atlas('human_atlas', './assets/humansheet.png', './assets/humanmap.json');
@@ -231,7 +232,7 @@ class Stage_1 extends Phaser.Scene{
             }
         },null,this);
 
-        this.button = this.physics.add.sprite(game.config.width, game.config.height - 50, "box_fragile").setScale(1);
+        this.button = this.physics.add.sprite(game.config.width- 40, game.config.height - 50, "exitsign").setScale(1);
         this.physics.add.collider(this.button,this.ground);
         this.player1_button = this.physics.add.overlap(this.player1,this.button,function(){
             if(keyE.isDown){

@@ -20,6 +20,7 @@ class Tutorial extends Phaser.Scene{
         this.load.image('hatch', './assets/hatch.png');
         this.load.image('arrow', './assets/arrow.png');
         this.load.image('be', './assets/ekey.png');
+        this.load.image('exitsign', './assets/exitsign.png');
 
         this.load.audio('switch','./assets/audio/switch.wav');
         this.load.audio('jump', './assets/audio/jump.wav');
@@ -163,7 +164,7 @@ class Tutorial extends Phaser.Scene{
         //this.playerGroup.add(playert2);
 
 
-        this.button = this.physics.add.sprite(game.config.width, game.config.height/2-40, "box_fragile").setScale(1);
+        this.button = this.physics.add.sprite(game.config.width-40, game.config.height/2-40, "exitsign").setScale(1);
         this.button.setImmovable(true);
         this.button.body.allowGravity = false;
         this.physics.add.collider(this.button,this.platform2); //tutorial end box
