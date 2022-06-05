@@ -15,6 +15,7 @@ class Pretu extends Phaser.Scene {
 
     update(){
         if(Phaser.Input.Keyboard.JustDown(keySpace)){
+            this.sound.play('select');
             this.scene.start("tutorialScene");
         }
     }

@@ -9,7 +9,7 @@ let config = {
             debug: true
         }
     },
-    scene: [ Menu , Tutorial , Stage_2, Stage_1, Credits, Over, Win, Pretu, Poststage1, Poststage2]
+    scene: [ Menu , Tutorial , Stage_2, Stage_1, Credits, Over, Win, Pretu, PostTutorial, Poststage1, Poststage2]
 }
 
 let game = new Phaser.Game(config);

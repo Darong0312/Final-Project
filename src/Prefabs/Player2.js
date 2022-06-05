@@ -16,7 +16,7 @@ class Player2 extends Phaser.Physics.Arcade.Sprite{
         this.anims.create({
             key: 'crab_idle_right',
             frames: this.anims.generateFrameNames('crab_atlas', {
-                prefix: 'crab_jump_right_',
+                prefix: 'crab_idle_right_',
                 start: 1,
                 end: 1,
                 suffix: '',
@@ -29,7 +29,7 @@ class Player2 extends Phaser.Physics.Arcade.Sprite{
         this.anims.create({
             key: 'crab_idle_left',
             frames: this.anims.generateFrameNames('crab_atlas', {
-                prefix: 'crab_jump_left_',
+                prefix: 'crab_idle_left_',
                 start: 1,
                 end: 1,
                 suffix: '',

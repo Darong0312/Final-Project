@@ -7,7 +7,7 @@ class Tutorial extends Phaser.Scene{
     preload(){
         this.load.image('back','./assets/tutorial_bg.png');
         this.load.image('switch','./assets/switch.jpg');
-        this.load.image('monsterA','./assets/monsterA_idle.png');
+        this.load.image('tenti','./assets/tenti.png');
         this.load.image('tutorial_bg', './assets/tutorial_bg.png');
         this.load.image('box_fragile', './assets/box_fragile.png');
         this.load.image('platform', './assets/wood_platform.png');
@@ -16,7 +16,6 @@ class Tutorial extends Phaser.Scene{
         this.load.image('box', './assets/box.png');
         this.load.atlas('crab_atlas', './assets/crabbertsheet.png', './assets/crabmap.json');
         this.load.atlas('tenti_atlas', './assets/tentisheet.png', './assets/tentimap.json');
-        this.load.image('crabJump', './assets/CrabJump.png');
         this.load.image('hatch', './assets/hatch.png');
         this.load.image('arrow', './assets/arrow.png');
         this.load.image('be', './assets/ekey.png');
@@ -78,7 +77,7 @@ class Tutorial extends Phaser.Scene{
         this.platform2.setFriction(0);
         
         // init players
-        this.player1 = new Player1(this,game.config.width/3 - 200, game.config.height - 100, 'monsterA');
+        this.player1 = new Player1(this,game.config.width/3 - 200, game.config.height - 100, 'tenti');
         this.physics.add.collider(this.ground,this.player1);
         this.physics.add.collider(this.wall, this.player1);
         this.physics.add.collider(this.hatch, this.player1);
@@ -137,6 +136,7 @@ class Tutorial extends Phaser.Scene{
         this.box = this.physics.add.sprite(game.config.width/3 + 20,game.config.height/2 - 40, 'box_fragile').setScale(1);
         this.physics.add.collider(this.box,this.platform);
         this.physics.add.collider(this.box,this.player2);
+        this.physics.add.collider(this.box, this.player1);
         this.box.setImmovable(true);
         this.box.body.allowGravity = false;
 
@@ -251,7 +251,7 @@ class Tutorial extends Phaser.Scene{
 
         if(this.interact_button1 && this.interact_button2){
             this.bgm.pause();
-            this.scene.start("Poststage1");
+            this.scene.start("PostTutorial");
         }
 
     }

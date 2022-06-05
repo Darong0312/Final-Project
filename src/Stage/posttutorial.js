@@ -1,14 +1,14 @@
-class Poststage1 extends Phaser.Scene {
+class PostTutorial extends Phaser.Scene {
     constructor() {
-        super("Poststage1");
+        super("PostTutorial");
     }
 
     preload(){
-        this.load.image('poststage1','./assets/poststage1.png');
+        this.load.image('postTutorial','./assets/posttutorial.png');
     }
     create() {
         // show menu image
-        this.add.image(game.config.width/2, game.config.height/2,'poststage1');
+        this.add.image(game.config.width/2, game.config.height/2,'postTutorial');
         // define keys
         keySpace = this.input.keyboard.addKey(32);
     }
@@ -16,7 +16,7 @@ class Poststage1 extends Phaser.Scene {
     update(){
         if(Phaser.Input.Keyboard.JustDown(keySpace)){
             this.sound.play('select');
-            this.scene.start("stageTwo");
+            this.scene.start("stageOne");
         }
     }
 }

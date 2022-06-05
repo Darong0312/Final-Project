@@ -10,7 +10,7 @@ class Stage_1 extends Phaser.Scene{
         this.load.image('platup','./assets/platup.png');
         this.load.image('platform', './assets/wood_platform.png');
         this.load.image('switch','./assets/switch.jpg');
-        this.load.image('monsterA','./assets/monsterA_idle.png');
+        this.load.image('tenti','./assets/tenti.png');
         this.load.image('crab', './assets/Crab.png');
         this.load.image('bigwall', './assets/bigwall.png');
         this.load.image('door', './assets/door.png');
@@ -31,6 +31,7 @@ class Stage_1 extends Phaser.Scene{
         this.load.audio('jump', './assets/audio/jump.wav');
         this.load.audio('climb', './assets/audio/climb.wav');
         this.load.audio('bgm1', './assets/audio/Level1theme.wav');
+        this.load.audio('death', './assets/audio/death.wav');
     }
 
     create(){
@@ -42,7 +43,9 @@ class Stage_1 extends Phaser.Scene{
         this.bgm1.loop = true;
         this.bgm1.play();
 
+        //stuff so sound only repeats after completely playing once
         this.sfxJump = this.sound.add('jump');
+        this.sfxJumpComplete = false;
         this.sfxJumpIsPlaying = false;
         this.sfxClimb = this.sound.add('climb');
         this.sfxClimbIsPlaying = false;
@@ -131,7 +134,7 @@ class Stage_1 extends Phaser.Scene{
 
         
         // init players
-        this.player1 = new Player1(this,game.config.width/3 - 300, game.config.height - 100, 'monsterA').setDepth(10);
+        this.player1 = new Player1(this,game.config.width/3 - 300, game.config.height - 100, 'tenti').setDepth(10);
         this.physics.add.collider(this.ground,this.player1);
         this.physics.add.collider(this.highwall, this.player1);
         this.physics.add.collider(this.bigwall, this.player1);
@@ -221,6 +224,7 @@ class Stage_1 extends Phaser.Scene{
         this.physics.add.overlap(this.player1, this.man, function(){
             if(!this.interact_switch){
                 // console.log("player1overlap");
+                this.sound.play('death');
                 this.gameover = true;
             }
         },null,this);
@@ -228,6 +232,7 @@ class Stage_1 extends Phaser.Scene{
         this.physics.add.overlap(this.player2, this.man, function(){
             if(!this.interact_switch){
                 // console.log("player2overlap");
+                this.sound.play('death');
                 this.gameover = true;
             }
         },null,this);
@@ -286,6 +291,10 @@ class Stage_1 extends Phaser.Scene{
         }
 
         //player 2 jump sfx
+        if (this.sfxJumpComplete && keyUP.isUp) {
+            this.sfxJumpIsPlaying = false;
+            this.sfxJumpComplete = false;
+        }
         if (this.player2.jump) {
             if (!this.sfxJumpIsPlaying) {
                 this.sfxJump.play();
@@ -293,7 +302,7 @@ class Stage_1 extends Phaser.Scene{
             this.sfxJump.on('play', () => {
                 this.sfxJumpIsPlaying = true;
                 this.sfxJump.on('complete', () => {
-                    this.sfxJumpIsPlaying = false;
+                    this.sfxJumpComplete = true;
                 });
             });
         }
@@ -343,7 +352,7 @@ class Stage_1 extends Phaser.Scene{
 
         if(this.interact_button1 && this.interact_button2){
             this.bgm1.pause();
-            this.scene.start("Poststage2");
+            this.scene.start("Poststage1");
             // console.log("enter stage 2");
         }
     }

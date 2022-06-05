@@ -7,7 +7,7 @@ class Stage_2 extends Phaser.Scene{
     preload(){
         this.load.image('back','./assets/tutorial_bg.png');
         this.load.image('switch','./assets/switch.jpg');
-        this.load.image('monsterA','./assets/monsterA_idle.png');
+        this.load.image('tenti','./assets/tenti.png');
         this.load.image('stage1Bg', './assets/backgrounds1.png');
         this.load.image('box_fragile', './assets/box_fragile.png');
         this.load.image('platform', './assets/wood_platform.png');
@@ -31,6 +31,7 @@ class Stage_2 extends Phaser.Scene{
         this.load.audio('switch','./assets/audio/switch.wav');
         this.load.audio('jump', './assets/audio/jump.wav');
         this.load.audio('climb', './assets/audio/climb.wav');
+        this.load.audio('fall', './assets/audio/fall.wav');
         this.load.audio('bgm2', './assets/audio/level2theme.wav');
     }
 
@@ -47,10 +48,16 @@ class Stage_2 extends Phaser.Scene{
             this.bgm2.loop = true;
             this.bgm2.play();
 
+            //stuff so sound only repeats after completely playing once
             this.sfxJump = this.sound.add('jump');
+            this.sfxJumpComplete = false;
             this.sfxJumpIsPlaying = false;
             this.sfxClimb = this.sound.add('climb');
             this.sfxClimbIsPlaying = false;
+
+            this.sfxFall = this.sound.add('fall');
+            this.sfxFallIsPlaying = false;
+
     
             // init ground and platform
             this.tutorial_bg = this.add.tileSprite(0, 0, 2400, 650, 'stage_2').setOrigin(0, 0);
@@ -63,7 +70,7 @@ class Stage_2 extends Phaser.Scene{
             this.ground.setFrictionX(0);
 
             // init players
-            this.player1 = new Player1(this,game.config.width/3 - 250, game.config.height - 100, 'monsterA').setDepth(1);
+            this.player1 = new Player1(this,game.config.width/3 - 250, game.config.height - 100, 'tenti').setDepth(1);
             this.physics.add.collider(this.ground,this.player1);
             this.player1.setCollideWorldBounds(true);
     
@@ -195,9 +202,11 @@ class Stage_2 extends Phaser.Scene{
             // setting sight
             this.sight = this.physics.add.sprite(game.config.width/2 + 1000, game.config.height - 100).setScale(11);
             this.physics.add.overlap(this.sight,this.player1,function(){
+                this.sound.play('death');
                 this.gameOver = true;
             },null,this);
             this.physics.add.overlap(this.sight,this.player2,function(){
+                this.sound.play('death');
                 this.gameOver = true;
             },null,this);
             this.sight.setImmovable(true);
@@ -224,21 +233,6 @@ class Stage_2 extends Phaser.Scene{
             this.exit_box.body.allowGravity = false;
             this.exit_box.visible = false;
 
-            // human sweep left
-            this.anims.create({
-                key: 'man_sweep_left',
-                frames: this.anims.generateFrameNames('human_atlas', {
-                    prefix: 'man_sweep_left_',
-                    start: 1,
-                    end: 3,
-                    suffix: '',
-                    zeroPad: 4
-                }),
-                frameRate: 10,
-                repeat: -1,
-                repeatDelay: 300,
-                yoyo: true
-            });
             // human sweep right
             this.anims.create({
                 key: 'man_sweep_right',
@@ -259,19 +253,6 @@ class Stage_2 extends Phaser.Scene{
                 key: 'man_look_left',
                 frames: this.anims.generateFrameNames('human_atlas', {
                     prefix: 'man_look_left_',
-                    start: 1,
-                    end: 5,
-                    suffix: '',
-                    zeroPad: 4
-                }),
-                frameRate: 8,
-                repeat: -1,
-                yoyo: true
-            });
-            this.anims.create({
-                key: 'man_look_right',
-                frames: this.anims.generateFrameNames('human_atlas', {
-                    prefix: 'man_look_right_',
                     start: 1,
                     end: 5,
                     suffix: '',
@@ -373,6 +354,10 @@ class Stage_2 extends Phaser.Scene{
         }
 
         //player 2 jump sfx
+        if (this.sfxJumpComplete && keyUP.isUp) {
+            this.sfxJumpIsPlaying = false;
+            this.sfxJumpComplete = false;
+        }
         if (this.player2.jump) {
             if (!this.sfxJumpIsPlaying) {
                 this.sfxJump.play();
@@ -380,7 +365,7 @@ class Stage_2 extends Phaser.Scene{
             this.sfxJump.on('play', () => {
                 this.sfxJumpIsPlaying = true;
                 this.sfxJump.on('complete', () => {
-                    this.sfxJumpIsPlaying = false;
+                    this.sfxJumpComplete = true;
                 });
             });
         }
@@ -419,9 +404,13 @@ class Stage_2 extends Phaser.Scene{
 
         // remove sight hit box
         if(this.onGround){
-            this.human.anims.play('man_sweep_left', true);
+            this.human.anims.play('man_look_left', true);
             this.sight.destroy();
             this.exit_box.visible = true;
+            if (!this.sfxFallIsPlaying) {
+                this.sfxFall.play();
+                this.sfxFallIsPlaying = true;
+            }
         }
 
         if(this.win){
