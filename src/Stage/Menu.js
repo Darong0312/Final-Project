@@ -19,7 +19,7 @@ class Menu extends Phaser.Scene {
             this.sound.play('select');
             this.scene.start("preTutorial");
             //this.scene.start("stageOne");
-            //this.scene.start("stageTwo");
+            //this.scene.start("creditScene");
         }
     }
 } 
