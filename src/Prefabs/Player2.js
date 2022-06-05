@@ -121,6 +121,7 @@ class Player2 extends Phaser.Physics.Arcade.Sprite{
     }
 
     update(){
+        this.setSize(50,50);
         this.setVelocityX(0);
         if (!this.anims.isPlaying) {
             this.anims.play('crab_idle_right', true);
@@ -154,6 +155,7 @@ class Player2 extends Phaser.Physics.Arcade.Sprite{
         if(keyUP.isDown){
             if(!this.jump){
                 if(this.jumpCount > 0){
+                    this.setSize(50,50);
                     this.setVelocityY(-300);
                     this.jump = true;
                     --this.jumpCount;

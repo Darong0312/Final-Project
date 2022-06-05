@@ -33,6 +33,7 @@ class Stage_2 extends Phaser.Scene{
         this.load.audio('climb', './assets/audio/climb.wav');
         this.load.audio('fall', './assets/audio/fall.wav');
         this.load.audio('bgm2', './assets/audio/level2theme.wav');
+        this.load.audio('death', './assets/audio/death.wav');
     }
 
 
@@ -41,7 +42,7 @@ class Stage_2 extends Phaser.Scene{
             // world bounds
             //this.physics.world.setBounds(0,0,800,600,true,true,true,false);
             //set background
-            let bg = this.add.image(game.config.width/2, game.config.height/2,"stage1Bg");
+            let bg = this.add.image(game.config.width/2, game.config.height/2,"stage_2");
 
             this.bgm2 = this.sound.add('bgm2');
             this.bgm2.setVolume(0.3);
@@ -397,9 +398,6 @@ class Stage_2 extends Phaser.Scene{
         // when the player interact with the lunch box, push it down to the ground
         if(this.push_lunch){
             this.physics.world.removeCollider(this.lunchOnPlatform);
-            if(this.lunch.body.touching.down){
-                this.lunch.setTexture('open_box');
-            }
         }
 
         // remove sight hit box
@@ -411,10 +409,13 @@ class Stage_2 extends Phaser.Scene{
                 this.sfxFall.play();
                 this.sfxFallIsPlaying = true;
             }
+            if(this.lunch.body.touching.down){
+                this.lunch.setTexture('open_box');
+            }
         }
 
         if(this.win){
-            this.scene.start("win");
+            this.scene.start("Poststage2");
         }
     }
 

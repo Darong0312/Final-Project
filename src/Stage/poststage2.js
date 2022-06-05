@@ -15,7 +15,7 @@ class Poststage2 extends Phaser.Scene {
 
     update(){
         if(Phaser.Input.Keyboard.JustDown(keySpace)){
-            this.scene.start("stageTwo");
+            this.scene.start("stageThree");
         }
     }
 }

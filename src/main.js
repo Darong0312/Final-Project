@@ -6,10 +6,10 @@ let config = {
         default: 'arcade',
         arcade: {
             gravity: { y:600},
-            debug: false
+            debug: true
         }
     },
-    scene: [ Menu , Tutorial , Stage_2, Stage_1, Credits, Over, Win, Pretu, PostTutorial, Poststage1, Poststage2]
+    scene: [ Menu , Tutorial , Stage_2, Stage_1, Stage_3, Credits, Over, Win, Pretu, PostTutorial, Poststage1, Poststage2, Postfinal]
 }
 
 let game = new Phaser.Game(config);

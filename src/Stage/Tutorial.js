@@ -171,13 +171,11 @@ class Tutorial extends Phaser.Scene{
         this.player1_button = this.physics.add.overlap(this.player1,this.button,function(){
             if(keyE.isDown){
                 this.interact_button1 = true;
-                console.log(this.interact_button1);
             }
         },null,this);
         this.player2_button = this.physics.add.overlap(this.player2,this.button,function(){
             if(keyDOWN.isDown){
                 this.interact_button2 = true;
-                console.log(this.interact_button2);
             }
         },null,this);
 

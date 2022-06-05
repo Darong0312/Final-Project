@@ -23,8 +23,6 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
             callback: () => {
                 this.timup = true;
                 this.climbTime--;
-                console.log(this.climbTime);
-                //console.log(this.timeup);
             },
             loop: true,
             callbackScope: this,
@@ -164,7 +162,7 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
             frameRate: 10,
             repeat: 0,
         });
-
+        this.climbRight = false;
     }
 
     update(){
@@ -193,35 +191,33 @@ class Player1 extends Phaser.Physics.Arcade.Sprite{
         else if(keyD.isDown){
             this.setVelocityX(speed);
             if(!this.form){
-                if (!this.isClimbing) {
+                if (!this.climbRight) {
                     this.anims.play('tenti_run_right', true);
                 }
             }
         }
 
+
         if(keyW.isDown && this.body.blocked.right && !this.form && keyD.isDown){
             if( this.climbTime > 0  ){
-                this.allowGravity = false;
                 this.setVelocityY(-100);
-                this.isClimbing = true;
+                this.climbRight = true;
                 this.anims.play('tenti_climb_right', true);
             }
         }
         else{
-            this.body.allowGravity = true;
-            this.isClimbing = false;
+            this.climbRight = false;
         }
+
 
         if(keyW.isDown && this.body.blocked.left && !this.form && keyA.isDown){
             if(this.climbTime > 0 ){
-                this.allowGravity = false;
                 this.setVelocityY(-100);
                 this.isClimbing = true;
                 this.anims.play('tenti_climb_left', true);
             }
         }
         else{
-            this.body.allowGravity = true;
             this.isClimbing = false;
         }
 
