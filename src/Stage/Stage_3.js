@@ -40,7 +40,8 @@ class Stage_3 extends Phaser.Scene{
         this.load.audio('jump', './assets/audio/jump.wav');
         this.load.audio('climb', './assets/audio/climb.wav');
         this.load.audio('fall', './assets/audio/fall.wav');
-        this.load.audio('bgm2', './assets/audio/level2theme.wav');
+        // this.load.audio('bgm2', './assets/audio/level2theme.wav');
+        this.load.audio('final_stage','assets/audio/final_stage.wav');
     }
 
 
@@ -51,10 +52,10 @@ class Stage_3 extends Phaser.Scene{
             //set background
             // let bg = this.add.image(game.config.width/2, game.config.height/2,"stage_3");
 
-            this.bgm2 = this.sound.add('bgm2');
-            this.bgm2.setVolume(0.3);
-            this.bgm2.loop = true;
-            this.bgm2.play();
+            this.bgm3 = this.sound.add('final_stage');
+            this.bgm3.setVolume(0.3);
+            this.bgm3.loop = true;
+            this.bgm3.play();
 
             // init background
             this.stage_3_bg = this.add.tileSprite(0, 0, 2400, 600, 'stage_3').setOrigin(0, 0).setDepth(5);
