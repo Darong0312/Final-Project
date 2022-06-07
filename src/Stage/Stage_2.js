@@ -16,8 +16,7 @@ class Stage_2 extends Phaser.Scene{
         this.load.image('box', './assets/box.png');
         this.load.image('human','./assets/olman.png');
         this.load.image('stage_2','./assets/stage_2.jpg');
-        this.load.image('door', './assets/door.png');
-        this.load.image('doorop', './assets/OPENDOOR.png');
+        this.load.image('fence', './assets/fencepost.png');
         this.load.image('lunchbox','./assets/lunchbox.png');
         this.load.image('open_box','./assets/OPENBOX.png');
         this.load.image('exit','./assets/gray_plat.png');
@@ -79,18 +78,12 @@ class Stage_2 extends Phaser.Scene{
             this.physics.add.collider(this.ground, this.player2);
             this.player2.setCollideWorldBounds(true);
 
-            this.door = this.physics.add.sprite(game.config.width / 3 + 270, game.config.height - 250,"door");
-            this.door.displayHeight = 400;
-            this.door.body.allowGravity = false;
-            this.door.setImmovable(true);
-            this.physics.add.collider(this.player1,this.door);
-            this.physics.add.collider(this.player2,this.door);
-
-            this.doorOpen = this.physics.add.sprite(game.config.width / 3 + 300, game.config.height - 250,"doorop").setScale(0.9).setDepth(0);
-            this.doorOpen.body.allowGravity = false;
-            this.doorOpen.displayHeight = 400;
-            this.doorOpen.setImmovable(true);
-            this.doorOpen.visible = false;
+            this.fence = this.physics.add.sprite(game.config.width / 3 + 270, game.config.height - 250,"fence");
+            this.fence.displayHeight = 400;
+            this.fence.body.allowGravity = false;
+            this.fence.setImmovable(true);
+            this.physics.add.collider(this.player1,this.fence);
+            this.physics.add.collider(this.player2,this.fence);
 
             this.switch = this.physics.add.sprite(game.config.width/2 + 340,game.config.height - 250, "switch");
             this.switch.body.allowGravity = false;
@@ -387,12 +380,7 @@ class Stage_2 extends Phaser.Scene{
 
         // open the door
         if(this.interact_switch){
-            // this.door.visible = false;
-            // this.door.setImmovable(false);
-            // this.door.body.allowGravity = true;
-            // this.door.setVelocityY(-500);
-            this.door.destroy();
-            this.doorOpen.visible = true;
+            this.fence.setPosition(game.config.width / 3 + 270, game.config.height - 500);
         }
  
         // when the player interact with the lunch box, push it down to the ground
